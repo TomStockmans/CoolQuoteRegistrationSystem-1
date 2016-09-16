@@ -1,6 +1,6 @@
 package be.swsb.cqrs;
 
-import be.swsb.cqrs.conversation.ConversationResource;
+import be.swsb.cqrs.conversation.ConversationResourceBase;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-        register(ConversationResource.class);
+        register(ConversationResourceBase.class);
     }
 }
