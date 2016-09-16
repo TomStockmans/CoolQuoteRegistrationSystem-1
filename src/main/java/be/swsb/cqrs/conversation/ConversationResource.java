@@ -15,6 +15,8 @@ public class ConversationResource {
     @GET
     @Path("{id}")
     public Conversation get(@PathParam("id") String id) {
-        return new Conversation();
+        Conversation conversation = new Conversation();
+        conversation.setId("blablaID");
+        return conversation;
     }
 }
