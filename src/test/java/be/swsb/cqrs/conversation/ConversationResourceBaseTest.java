@@ -12,26 +12,36 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class, JerseyConfig.class})
 @WebIntegrationTest
 public class ConversationResourceBaseTest {
 
-    private WebTarget baseTarget;
+    private ConversationResource conversationResource;
 
     @Before
     public void setUp() throws Exception {
-        baseTarget = JerseyClientBuilder.newBuilder().build().target("http://localhost:9000");
+        WebTarget baseTarget = JerseyClientBuilder.newBuilder().build().target("http://localhost:9000");
+        conversationResource = WebResourceFactory.newResource(ConversationResource.class, baseTarget);
     }
 
     @Test
     public void getById_DoesStuff() throws Exception {
         String id = "test";
-        Conversation conversation = WebResourceFactory.newResource(ConversationResource.class, baseTarget).get(id);
+        Conversation conversation = conversationResource.get(id).readEntity(Conversation.class);
 
         assertThat(conversation.getId()).isNotEmpty();
+    }
+
+    @Test
+    public void create_ValidConversation_ReturnsNewLocation() throws Exception {
+        Response response = conversationResource.create(new Conversation());
+
+        assertThat(response).hasStatus(Response.Status.CREATED);
     }
 }

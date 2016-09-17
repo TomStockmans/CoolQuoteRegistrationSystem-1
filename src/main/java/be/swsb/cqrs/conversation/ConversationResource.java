@@ -1,12 +1,11 @@
 package be.swsb.cqrs.conversation;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 
-@Produces(MediaType.APPLICATION_JSON)
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+@Produces(APPLICATION_JSON)
 @Path(ConversationResource.CONVERSATION_BASE_URL)
 public interface ConversationResource {
 
@@ -14,5 +13,9 @@ public interface ConversationResource {
 
     @GET
     @Path("{id}")
-    Conversation get(@PathParam("id") String id);
+    Response get(@PathParam("id") String id);
+
+    @POST
+    @Consumes(APPLICATION_JSON)
+    Response create(Conversation newConversation);
 }
