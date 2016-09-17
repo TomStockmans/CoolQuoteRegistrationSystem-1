@@ -18,17 +18,17 @@ public class ConversationResourceBase implements ConversationResource {
     @Autowired
     private ConversationRepository repo;
 
+    @Override
+    public Response all() {
+        return Response.ok(repo.findAll()).build();
+    }
+
     @GET
     @Path("{id}")
     @Override
     public Response get(@PathParam("id") String id) {
         Conversation conversation = repo.findOne(id);
         return Response.ok(conversation).build();
-    }
-
-    @Override
-    public Response all() {
-        return Response.ok(repo.findAll()).build();
     }
 
     @POST
@@ -39,4 +39,13 @@ public class ConversationResourceBase implements ConversationResource {
         URI uri = UriBuilder.fromResource(ConversationResourceBase.class).path(conv.getId()).build();
         return Response.created(uri).build();
     }
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    @Override
+    public Response update(Conversation updatedConversation) {
+        repo.save(updatedConversation);
+        return Response.ok(updatedConversation).build();
+    }
+
 }

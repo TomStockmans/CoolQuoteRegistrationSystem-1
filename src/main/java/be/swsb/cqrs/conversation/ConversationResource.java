@@ -12,13 +12,17 @@ public interface ConversationResource {
     String CONVERSATION_BASE_URL = "conversation";
 
     @GET
-    @Path("{id}")
-    Response get(@PathParam("id") String id);
+    Response all();
 
     @GET
-    Response all();
+    @Path("{id}")
+    Response get(@PathParam("id") String id);
 
     @POST
     @Consumes(APPLICATION_JSON)
     Response create(Conversation newConversation);
+
+    @PUT
+    @Consumes(APPLICATION_JSON)
+    Response update(Conversation updatedConversation);
 }

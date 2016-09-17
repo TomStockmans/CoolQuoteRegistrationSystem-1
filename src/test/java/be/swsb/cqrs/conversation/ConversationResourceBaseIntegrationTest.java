@@ -71,4 +71,20 @@ public class ConversationResourceBaseIntegrationTest {
         assertThat(response).hasStatus(Response.Status.CREATED);
         assertThat(response).hasLocationContaining("http://localhost:9000/conversation/");
     }
+
+    @Test
+    public void update_ValidConversation_PersistsUpdatedConversationAndReturnsIt() throws Exception {
+        Conversation snarf = aDefaultConversation().withPunchLine("Snarf snarf").build();
+        Conversation savedSnarf = repo.save(snarf);
+        String savedSnarfId = savedSnarf.getId();
+
+        Conversation updatedInGUISnarf = aDefaultConversation().withId(savedSnarfId).withPunchLine("ThunderCats! HOOooooooo!").build();
+
+        Response response = conversationResource.update(updatedInGUISnarf);
+
+        assertThat(response).hasStatus(Response.Status.OK);
+
+        Conversation snarfAfterUpdate = repo.findOne(savedSnarfId);
+        assertThat(snarfAfterUpdate).isEqualTo(updatedInGUISnarf);
+    }
 }
