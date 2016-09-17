@@ -31,8 +31,7 @@ public class ConversationResourceBase implements ConversationResource {
     @Override
     public Response create(Conversation newConversation) {
         Conversation conv = repo.save(newConversation);
-        String newUuid = "1234";
-        URI uri = UriBuilder.fromResource(ConversationResourceBase.class).path(newUuid).build();
+        URI uri = UriBuilder.fromResource(ConversationResourceBase.class).path(conv.getId().toString()).build();
         return Response.created(uri).build();
     }
 }

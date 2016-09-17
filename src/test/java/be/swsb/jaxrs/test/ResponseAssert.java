@@ -30,7 +30,25 @@ public class ResponseAssert extends AbstractAssert<ResponseAssert, Response> {
         isNotNull();
 
         if (!Objects.equals(actual.getLocation(), expectedURI)) {
-            failWithMessage("Expected status code to be <%s> but was <%s>", expectedURI, actual.getLocation());
+            failWithMessage("Expected location to be <%s> but was <%s>", expectedURI, actual.getLocation());
+        }
+        return this;
+    }
+
+    public ResponseAssert hasLocation() {
+        isNotNull();
+
+        if (Objects.isNull(actual.getLocation())) {
+            failWithMessage("Expected location not to be null");
+        }
+        return this;
+    }
+
+    public ResponseAssert hasLocationContaining(String expectedContained) {
+        hasLocation();
+
+        if (!actual.getLocation().toString().contains(expectedContained)) {
+            failWithMessage("Expected location to contain <%s> but was <%s>", expectedContained, actual.getLocation());
         }
         return this;
     }

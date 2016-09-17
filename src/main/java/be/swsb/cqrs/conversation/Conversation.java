@@ -1,32 +1,32 @@
 package be.swsb.cqrs.conversation;
 
-import java.util.Collection;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+
+import java.util.List;
 
 
 public class Conversation {
 
-    private Collection<Line> lines;
+    @Id
     private String id;
+    private List<Line> lines;
     private Line punchLine;
+
+    @JsonCreator
+    public Conversation(@JsonProperty("id") String id, @JsonProperty("lines") List<Line> lines, @JsonProperty("punchLine") Line punchLine) {
+        this.id = id;
+        this.lines = lines;
+        this.punchLine = punchLine;
+    }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setLines(Collection<Line> lines) {
-        this.lines = lines;
-    }
-
-    public Collection<Line> getLines() {
+    public List<Line> getLines() {
         return lines;
-    }
-
-    public void setPunchLine(Line punchLine) {
-        this.punchLine = punchLine;
     }
 
     public Line getPunchLine() {
