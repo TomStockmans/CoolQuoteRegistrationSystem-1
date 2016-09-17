@@ -15,6 +15,9 @@ public interface ConversationResource {
     @Path("{id}")
     Response get(@PathParam("id") String id);
 
+    @GET
+    Response all();
+
     @POST
     @Consumes(APPLICATION_JSON)
     Response create(Conversation newConversation);

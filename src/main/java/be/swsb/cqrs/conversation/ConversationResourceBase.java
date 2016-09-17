@@ -26,6 +26,11 @@ public class ConversationResourceBase implements ConversationResource {
         return Response.ok(conversation).build();
     }
 
+    @Override
+    public Response all() {
+        return Response.ok(repo.findAll()).build();
+    }
+
     @POST
     @Consumes(APPLICATION_JSON)
     @Override

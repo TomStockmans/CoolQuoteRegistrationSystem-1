@@ -47,4 +47,11 @@ public class ConversationTestBuilder {
         this.punchLine = punchLine;
         return this;
     }
+
+    public ConversationTestBuilder withPunchLine(String punchLine) {
+        Line line = new Line();
+        line.setText(punchLine);
+        this.punchLine = line;
+        return this;
+    }
 }
