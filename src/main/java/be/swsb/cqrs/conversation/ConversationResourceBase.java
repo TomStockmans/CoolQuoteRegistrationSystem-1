@@ -1,8 +1,7 @@
 package be.swsb.cqrs.conversation;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -15,7 +14,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path(ConversationResource.CONVERSATION_BASE_URL)
 public class ConversationResourceBase implements ConversationResource {
 
-    @Autowired
+    @Inject
     private ConversationRepository repo;
 
     @Override
@@ -53,6 +52,10 @@ public class ConversationResourceBase implements ConversationResource {
     @Path("{id}")
     @Override
     public Response update(@PathParam("id") String id, Conversation updatedConversation) {
+        if (repo.findOne(id) == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         repo.save(updatedConversation);
         return Response.ok(updatedConversation).build();
     }

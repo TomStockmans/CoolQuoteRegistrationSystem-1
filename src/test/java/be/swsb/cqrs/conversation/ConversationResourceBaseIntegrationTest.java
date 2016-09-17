@@ -99,4 +99,20 @@ public class ConversationResourceBaseIntegrationTest {
         Conversation snarfAfterUpdate = repo.findOne(savedSnarfId);
         assertThat(snarfAfterUpdate).isEqualTo(updatedInGUISnarf);
     }
+
+    @Test
+    public void update_NonExistingConversation_Returns404() throws Exception {
+        Conversation snarf = aDefaultConversation().withPunchLine("Snarf snarf").build();
+        Conversation savedSnarf = repo.save(snarf);
+        String savedSnarfId = savedSnarf.getId();
+
+        Conversation updatedInGUISnarf = aDefaultConversation().withId(savedSnarfId).withPunchLine("ThunderCats! HOOooooooo!").build();
+
+        Response response = conversationResource.update("someOtherId", updatedInGUISnarf);
+
+        assertThat(response).hasStatus(Response.Status.NOT_FOUND);
+
+        Conversation snarfAfterUpdate = repo.findOne(savedSnarfId);
+        assertThat(snarfAfterUpdate).isEqualTo(snarf);
+    }
 }
