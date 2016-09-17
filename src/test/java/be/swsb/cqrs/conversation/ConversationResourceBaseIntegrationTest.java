@@ -7,6 +7,7 @@ import org.glassfish.jersey.client.proxy.WebResourceFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,7 +22,10 @@ import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class, JerseyConfig.class})
 @WebIntegrationTest
-public class ConversationResourceBaseTest {
+public class ConversationResourceBaseIntegrationTest {
+
+    @Autowired
+    private ConversationRepository repo;
 
     private ConversationResource conversationResource;
 
@@ -33,7 +37,8 @@ public class ConversationResourceBaseTest {
 
     @Test
     public void getById_DoesStuff() throws Exception {
-        String id = "test";
+        Conversation savedConvo = repo.save(new Conversation());
+        String id = savedConvo.getId();
         Conversation conversation = conversationResource.get(id).readEntity(Conversation.class);
 
         assertThat(conversation.getId()).isNotEmpty();
@@ -44,7 +49,7 @@ public class ConversationResourceBaseTest {
         Response response = conversationResource.create(new Conversation());
 
         assertThat(response).hasStatus(Response.Status.CREATED);
-//        assertThat(response).hasLocation(UriBuilder.fromResource(ConversationResourceBase.class).scheme("http").host("localhost").port(9000).path("1234").build());
         assertThat(response).hasLocation(UriBuilder.fromUri("http://localhost:9000/conversation/{id}").build("1234"));
+//        assertThat(response).hasLocation(UriBuilder.fromResource(ConversationResourceBase.class).scheme("http").host("localhost").port(9000).path("1234").build());
     }
 }
