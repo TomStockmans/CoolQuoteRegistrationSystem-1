@@ -43,6 +43,11 @@ public class ConversationTestBuilder {
         return this;
     }
 
+    public ConversationTestBuilder withLines(Line... lines) {
+        this.lines = Arrays.asList(lines);
+        return this;
+    }
+
     public ConversationTestBuilder withPunchLine(Line punchLine) {
         this.punchLine = punchLine;
         return this;

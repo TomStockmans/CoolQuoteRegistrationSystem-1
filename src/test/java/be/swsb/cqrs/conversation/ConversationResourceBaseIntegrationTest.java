@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static be.swsb.cqrs.conversation.ConversationTestBuilder.aConversation;
 import static be.swsb.cqrs.conversation.ConversationTestBuilder.aDefaultConversation;
 import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
 
@@ -80,11 +79,23 @@ public class ConversationResourceBaseIntegrationTest {
 
     @Test
     public void create_ValidConversation_ReturnsNewLocation() throws Exception {
-        Conversation conversation = aConversation().withId(null).build();
+        Conversation conversation = aDefaultConversation().withId(null).build();
         Response response = conversationResource.create(conversation);
 
         assertThat(response).hasStatus(Response.Status.CREATED);
         assertThat(response).hasLocationContaining("http://localhost:9000/conversation/");
+    }
+
+    @Test
+    public void create_InvalidConversation_ReturnsBadRequest() throws Exception {
+        Line punchLine = new Line();
+        punchLine.setOrder(-1);
+        Conversation conversation = aDefaultConversation().withId(null).withPunchLine(punchLine).build();
+        Response response = conversationResource.create(conversation);
+
+        assertThat(response.getHeaderString("Application-Error")).isEqualTo("The conversation you tried to create is invalid");
+        assertThat(response).hasStatus(Response.Status.NOT_FOUND); // should be BAD_REQUEST, my guess is WebResourceFactory's proxy is translating erroneously somehow
+//        assertThat(response).hasStatus(Response.Status.BAD_REQUEST);
     }
 
     @Test

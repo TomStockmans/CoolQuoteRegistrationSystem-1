@@ -17,6 +17,9 @@ public class ConversationResourceBase implements ConversationResource {
     @Inject
     private ConversationRepository repo;
 
+    @Inject
+    private ConversationValidator conversationValidator;
+
     @Override
     public Response all() {
         return Response.ok(repo.findAll()).build();
@@ -48,6 +51,9 @@ public class ConversationResourceBase implements ConversationResource {
     @Consumes(APPLICATION_JSON)
     @Override
     public Response create(Conversation newConversation) {
+        if (!conversationValidator.validate(newConversation)) {
+            return Response.status(Response.Status.BAD_REQUEST).header("Application-Error", "The conversation you tried to create is invalid").build();
+        }
         Conversation conv = repo.save(newConversation);
         URI uri = UriBuilder.fromResource(ConversationResourceBase.class).path(conv.getId()).build();
         return Response.created(uri).build();

@@ -67,4 +67,8 @@ public class Line {
                 ", order=" + order +
                 '}';
     }
+
+    public static boolean isValid(Line line) {
+        return line.order >= 0;
+    }
 }
