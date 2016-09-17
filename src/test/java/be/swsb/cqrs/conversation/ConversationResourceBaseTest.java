@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
 
@@ -43,5 +44,7 @@ public class ConversationResourceBaseTest {
         Response response = conversationResource.create(new Conversation());
 
         assertThat(response).hasStatus(Response.Status.CREATED);
+//        assertThat(response).hasLocation(UriBuilder.fromResource(ConversationResourceBase.class).scheme("http").host("localhost").port(9000).path("1234").build());
+        assertThat(response).hasLocation(UriBuilder.fromUri("http://localhost:9000/conversation/{id}").build("1234"));
     }
 }
