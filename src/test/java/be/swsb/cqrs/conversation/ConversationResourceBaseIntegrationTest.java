@@ -73,6 +73,18 @@ public class ConversationResourceBaseIntegrationTest {
     }
 
     @Test
+    public void delete_WhenConversationPresent_DeletesConversation() throws Exception {
+        Conversation savedConvo = repo.save(aDefaultConversation().build());
+        String id = savedConvo.getId();
+        Response response = conversationResource.delete(id);
+
+        assertThat(response).hasStatus(Response.Status.OK);
+
+        Conversation conversation = repo.findOne(id);
+        assertThat(conversation).isNull();
+    }
+
+    @Test
     public void update_ValidConversation_PersistsUpdatedConversationAndReturnsIt() throws Exception {
         Conversation snarf = aDefaultConversation().withPunchLine("Snarf snarf").build();
         Conversation savedSnarf = repo.save(snarf);
@@ -80,7 +92,7 @@ public class ConversationResourceBaseIntegrationTest {
 
         Conversation updatedInGUISnarf = aDefaultConversation().withId(savedSnarfId).withPunchLine("ThunderCats! HOOooooooo!").build();
 
-        Response response = conversationResource.update(updatedInGUISnarf);
+        Response response = conversationResource.update(savedSnarfId, updatedInGUISnarf);
 
         assertThat(response).hasStatus(Response.Status.OK);
 

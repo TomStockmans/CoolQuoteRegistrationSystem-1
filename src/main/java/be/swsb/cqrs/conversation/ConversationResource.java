@@ -22,7 +22,12 @@ public interface ConversationResource {
     @Consumes(APPLICATION_JSON)
     Response create(Conversation newConversation);
 
-    @PUT
+    @DELETE
+    @Path("{id}")
+    Response delete(@PathParam("id") String id);
+
+    @PUT //should probably be POST instead of PUT because PUT is supposed to be idempotent
     @Consumes(APPLICATION_JSON)
-    Response update(Conversation updatedConversation);
+    @Path("{id}")
+    Response update(@PathParam("id") String id, Conversation updatedConversation);
 }

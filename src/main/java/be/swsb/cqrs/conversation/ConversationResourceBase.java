@@ -31,6 +31,14 @@ public class ConversationResourceBase implements ConversationResource {
         return Response.ok(conversation).build();
     }
 
+    @DELETE
+    @Path("{id}")
+    @Override
+    public Response delete(@PathParam("id") String id) {
+        repo.delete(id);
+        return Response.ok().build();
+    }
+
     @POST
     @Consumes(APPLICATION_JSON)
     @Override
@@ -40,10 +48,11 @@ public class ConversationResourceBase implements ConversationResource {
         return Response.created(uri).build();
     }
 
-    @PUT
+    @PUT //should probably be POST instead of PUT because PUT is supposed to be idempotent
     @Consumes(APPLICATION_JSON)
+    @Path("{id}")
     @Override
-    public Response update(Conversation updatedConversation) {
+    public Response update(@PathParam("id") String id, Conversation updatedConversation) {
         repo.save(updatedConversation);
         return Response.ok(updatedConversation).build();
     }
