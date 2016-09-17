@@ -34,6 +34,9 @@ public class ConversationResourceBase implements ConversationResource {
     @Path("{id}")
     @Override
     public Response delete(@PathParam("id") String id) {
+        if (repo.findOne(id) == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         repo.delete(id);
         return Response.ok().build();
     }

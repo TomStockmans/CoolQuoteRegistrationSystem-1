@@ -85,6 +85,18 @@ public class ConversationResourceBaseIntegrationTest {
     }
 
     @Test
+    public void delete_NonExistingConversation_Returns404() throws Exception {
+        Conversation savedConvo = repo.save(aDefaultConversation().build());
+        String id = savedConvo.getId();
+        Response response = conversationResource.delete("someOtherId");
+
+        assertThat(response).hasStatus(Response.Status.NOT_FOUND);
+
+        Conversation conversation = repo.findOne(id);
+        assertThat(conversation).isEqualTo(savedConvo);
+    }
+
+    @Test
     public void update_ValidConversation_PersistsUpdatedConversationAndReturnsIt() throws Exception {
         Conversation snarf = aDefaultConversation().withPunchLine("Snarf snarf").build();
         Conversation savedSnarf = repo.save(snarf);
