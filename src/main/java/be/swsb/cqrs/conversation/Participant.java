@@ -10,4 +10,12 @@ public class Participant {
         this.name = name;
         this.victim = victim;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isVictim() {
+        return victim;
+    }
 }
