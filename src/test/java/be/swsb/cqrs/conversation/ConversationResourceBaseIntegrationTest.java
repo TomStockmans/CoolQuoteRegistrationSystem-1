@@ -53,6 +53,5 @@ public class ConversationResourceBaseIntegrationTest {
 
         assertThat(response).hasStatus(Response.Status.CREATED);
         assertThat(response).hasLocationContaining("http://localhost:9000/conversation/");
-//        assertThat(response).hasLocation(UriBuilder.fromResource(ConversationResourceBase.class).scheme("http").host("localhost").port(9000).path("1234").build());
     }
 }
