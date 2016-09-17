@@ -53,6 +53,14 @@ public class ConversationResourceBaseIntegrationTest {
     }
 
     @Test
+    public void get_NonExistingConversation_Returns404() throws Exception {
+        repo.save(aDefaultConversation().build());
+        Response response = conversationResource.get("someOtherId");
+
+        assertThat(response).hasStatus(Response.Status.NOT_FOUND);
+    }
+
+    @Test
     public void all_WhenConversationsPresent_ReturnsAllConversations() throws Exception {
         Conversation snarf = aDefaultConversation().withPunchLine("Snarf snarf").build();
         Conversation liono = aDefaultConversation().withPunchLine("Thundercats! HOOooooooooo").build();

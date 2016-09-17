@@ -27,6 +27,9 @@ public class ConversationResourceBase implements ConversationResource {
     @Override
     public Response get(@PathParam("id") String id) {
         Conversation conversation = repo.findOne(id);
+        if (conversation == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok(conversation).build();
     }
 
