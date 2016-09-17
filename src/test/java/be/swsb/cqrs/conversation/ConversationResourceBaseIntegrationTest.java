@@ -35,7 +35,7 @@ public class ConversationResourceBaseIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        repo.deleteAll();
+        repo.deleteAll(); //clean slate before every test run
         WebTarget baseTarget = JerseyClientBuilder.newBuilder().build().target("http://localhost:9000");
         conversationResource = WebResourceFactory.newResource(ConversationResource.class, baseTarget);
     }
@@ -62,7 +62,7 @@ public class ConversationResourceBaseIntegrationTest {
     @Test
     public void all_WhenConversationsPresent_ReturnsAllConversations() throws Exception {
         Conversation snarf = aDefaultConversation().withPunchLine("Snarf snarf").build();
-        Conversation liono = aDefaultConversation().withPunchLine("Thundercats! HOOooooooooo").build();
+        Conversation liono = aDefaultConversation().withPunchLine("Thundercats! HOOooooooooo!").build();
         repo.save(Arrays.asList(snarf,liono));
 
         List<Conversation> conversations = Stream.of(conversationResource.all().readEntity(Conversation[].class)).collect(Collectors.toList());
