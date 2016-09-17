@@ -72,6 +72,13 @@ public class ConversationResourceBaseIntegrationTest {
     }
 
     @Test
+    public void all_WhenNoConversationsPresent_Returns200() throws Exception {
+        Response response = conversationResource.all();
+
+        assertThat(response).hasStatus(Response.Status.OK);
+    }
+
+    @Test
     public void create_ValidConversation_ReturnsNewLocation() throws Exception {
         Conversation conversation = aConversation().withId(null).build();
         Response response = conversationResource.create(conversation);
