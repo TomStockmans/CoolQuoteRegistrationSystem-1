@@ -28,6 +28,20 @@ Install the `Mongo Plugin` in IntelliJ.
 
 Add `192.168.99.100:27017` as a new connection, _et voila_, happy querying.
 
+## Serving static content
+[IndexController.java](src/main/java/be/swsb/cqrs/IndexController.java) serves the `index.html` _ThymeLeaf_ template.
+
+This is a Spring Mvc Controller, so we couldn't map /* to Jersey anymore.
+
+This is why `application.properties` has properties:
+
+    spring.jersey.applicationPath=/api
+    spring.jersey.type=filter
+
+The `spring.jersey.type=filter` property will run Jersey as a Filter instead of a Servlet.
+
+The other thing I had to do was add the `spring-boot-starter-thymeleaf` dependency, so that there's an automagic ViewResolver that tries to find a matching filename in `/resources/templates`.
+
 ## IntegrationTest magic
 ### Overriding application.properties
 Other than [src/main/resources/application.properties](src/main/resources/application.properties), there's a [src/test/resources/application.properties](src/test/resources/application.properties) which overriding the main one at test runtime.
