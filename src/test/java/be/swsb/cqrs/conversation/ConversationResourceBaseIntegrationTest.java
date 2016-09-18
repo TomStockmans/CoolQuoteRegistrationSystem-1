@@ -36,7 +36,7 @@ public class ConversationResourceBaseIntegrationTest {
     @Before
     public void setUp() throws Exception {
         repo.deleteAll(); //clean slate before every test run
-        WebTarget baseTarget = JerseyClientBuilder.newBuilder().build().target("http://localhost:9000");
+        WebTarget baseTarget = JerseyClientBuilder.newBuilder().build().target("http://localhost:9000/api");
         conversationResource = WebResourceFactory.newResource(ConversationResource.class, baseTarget);
     }
 
@@ -83,7 +83,7 @@ public class ConversationResourceBaseIntegrationTest {
         Response response = conversationResource.create(conversation);
 
         assertThat(response).hasStatus(Response.Status.CREATED);
-        assertThat(response).hasLocationContaining("http://localhost:9000/conversation/");
+        assertThat(response).hasLocationContaining("http://localhost:9000/api/conversation/");
     }
 
     @Test
@@ -94,8 +94,7 @@ public class ConversationResourceBaseIntegrationTest {
         Response response = conversationResource.create(conversation);
 
         assertThat(response.getHeaderString("Application-Error")).isEqualTo("The conversation you tried to create is invalid");
-        assertThat(response).hasStatus(Response.Status.NOT_FOUND); // should be BAD_REQUEST, my guess is WebResourceFactory's proxy is translating erroneously somehow
-//        assertThat(response).hasStatus(Response.Status.BAD_REQUEST);
+        assertThat(response).hasStatus(Response.Status.BAD_REQUEST);
     }
 
     @Test
