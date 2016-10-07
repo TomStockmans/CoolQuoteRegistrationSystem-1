@@ -29,9 +29,9 @@ Install the `Mongo Plugin` in IntelliJ.
 Add `192.168.99.100:27017` as a new connection, _et voila_, happy querying.
 
 ## Serving static content
-[IndexController.java](src/main/java/be/swsb/cqrs/IndexController.java) serves the `index.html` _ThymeLeaf_ template.
+We are now only serving static content, and therefore we don't need an `IndexController` anymore.
 
-This is a Spring Mvc Controller, so we couldn't map /* to Jersey anymore.
+Thymeleaf serves `index.html` straight from the `resources/static` dir.
 
 This is why `application.properties` has properties:
 
@@ -41,6 +41,17 @@ This is why `application.properties` has properties:
 The `spring.jersey.type=filter` property will run Jersey as a Filter instead of a Servlet.
 
 The other thing I had to do was add the `spring-boot-starter-thymeleaf` dependency, so that there's an automagic ViewResolver that tries to find a matching filename in `/resources/templates`.
+
+## Info on the Aurelia App
+I generated it using `au new --here` and modifying the default names to contain CQRS instead of default or whatever.
+
+To be able to work with this way of Aurelia app, install the aurelia-cli.
+
+```
+npm install -g aurelia-cli
+```
+
+Or follow [this guide](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/the-aurelia-cli/1) for more info.
 
 ## IntegrationTest magic
 ### Overriding application.properties
