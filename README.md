@@ -40,7 +40,7 @@ This is why `application.properties` has properties:
 
 The `spring.jersey.type=filter` property will run Jersey as a Filter instead of a Servlet.
 
-The other thing I had to do was add the `spring-boot-starter-thymeleaf` dependency, so that there's an automagic ViewResolver that tries to find a matching filename in `/resources/templates`.
+The other thing I had to do was add the `spring-boot-starter-thymeleaf` dependency, so that there's an automagic ViewResolver that tries to find a matching filename in `/resources/static`.
 
 ## Info on the Aurelia App
 I generated it using `au new --here` and modifying the default names to contain CQRS instead of default or whatever.
@@ -52,6 +52,9 @@ npm install -g aurelia-cli
 ```
 
 Or follow [this guide](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/the-aurelia-cli/1) for more info.
+
+### IntelliJ pro-tip
+Mark `src/main/resources/static/node_modules` as _Excluded_. :+1:
 
 ## IntegrationTest magic
 ### Overriding application.properties
