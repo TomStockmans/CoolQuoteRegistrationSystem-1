@@ -1,0 +1,40 @@
+[
+  {
+    "id": "797fa7a4-4f27-419a-8246-38639c8ed887",
+    "lines": [
+      {
+        "text": "firstLine",
+        "lineType": "SPEECH",
+        "participants": [
+          {
+            "name": "Gianni",
+            "victim": false
+          }
+        ],
+        "order": 2
+      },
+      {
+        "text": "secondLine",
+        "lineType": "SPEECH",
+        "participants": [
+          {
+            "name": "Pablo",
+            "victim": false
+          }
+        ],
+        "order": 0
+      }
+    ],
+    "punchLine": {
+      "text": "testing...1..2..3..",
+      "lineType": "SPEECH",
+      "participants": [
+        {
+          "name": "Dickbutt",
+          "victim": false
+        }
+      ],
+      "order": 9
+    }
+  }
+]
