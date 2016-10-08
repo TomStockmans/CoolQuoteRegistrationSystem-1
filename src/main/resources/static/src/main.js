@@ -35,6 +35,18 @@ export function configure(aurelia) {
           'X-Requested-With': 'Fetch'
         }
       })
+      .withInterceptor({
+        request(request) {
+          if (environment.debug || environment.testing) {
+            console.log(`Requesting ${request.method} ${request.url}`);
+          }
+          return request;
+        },
+        response(response) {
+          console.log(`Received ${response.status} ${response.url}`);
+          return response;
+        }
+      });
     ;
   });
   aurelia.container.registerInstance(HttpClient, http);
