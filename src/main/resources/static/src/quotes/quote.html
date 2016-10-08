@@ -1,7 +1,8 @@
 <template>
   <require from="./line"></require>
-
-    <dl class="dl-horizontal" repeat.for="line of lines">
-      <line line.bind="line"></line>
-    </dl>
+    <div class="panel panel-default">
+      <dl class="dl-horizontal panel-body" repeat.for="line of lines">
+        <line line.bind="line"></line>
+      </dl>
+    </div>
 </template>
