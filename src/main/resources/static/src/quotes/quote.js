@@ -4,10 +4,13 @@ export class Quote {
 
   @bindable quote = null;
 
-  lines() {
+  bind() {
     let allLines = this.quote.lines;
     allLines.push(this.quote.punchLine);
-    return allLines;
+    this.lines = allLines;
   }
 
+  unbind() {
+    this.lines = [];
+  }
 }
