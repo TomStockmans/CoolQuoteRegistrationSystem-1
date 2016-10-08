@@ -1,3 +1,7 @@
 <template>
-  ${quote.punchLine.text}
+  <require from="./line"></require>
+
+    <dl class="dl-horizontal" repeat.for="line of lines()">
+      <line line.bind="line"></line>
+    </dl>
 </template>

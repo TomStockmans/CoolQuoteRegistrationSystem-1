@@ -1,0 +1,5 @@
+<template>
+  <dt repeat.for="participant of participants">
+    <p class="${participant.victim ? 'text-danger' : ''}">${participant.name}</p>
+  </dt>
+</template>

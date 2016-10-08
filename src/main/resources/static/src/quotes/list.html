@@ -1,6 +1,6 @@
 <template>
   <require from="./quote"></require>
-  <ul repeat.for="quote of quotes">
-    <li><quote quote.bind="quote"></quote></li>
-  </ul>
+  <div class="container center-block" repeat.for="quote of quotes">
+    <quote quote.bind="quote"></quote>
+  </div>
 </template>
