@@ -1,9 +1,13 @@
 package be.swsb.cqrs;
 
-import be.swsb.cqrs.conversation.ConversationRepository;
+import be.swsb.cqrs.conversation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Arrays;
+import java.util.UUID;
 
 @SpringBootApplication
 public class Application
@@ -19,14 +23,11 @@ public class Application
 
 //    @Override
 //    public void run(String... args) throws Exception {
-//        Conversation conv = new Conversation();
 //        Line punchLine = new Line();
 //        punchLine.setOrder(9);
 //        punchLine.setLineType(LineType.SPEECH);
 //        punchLine.setParticipants(Arrays.asList(new Participant("Dickbutt", false)));
 //        punchLine.setText("testing...1..2..3..");
-//
-//        conv.setPunchLine(punchLine);
 //
 //        Line line0 = new Line();
 //        line0.setText("contextLine");
@@ -45,8 +46,8 @@ public class Application
 //        line2.setLineType(LineType.SPEECH);
 //        line1.setOrder(2);
 //
-//        conv.setLines(Arrays.asList(line1, line2));
 //
+//        Conversation conv = new Conversation(UUID.randomUUID().toString(), Arrays.asList(line1, line2), punchLine);
 //        Conversation savedConvo = repo.save(conv);
 //        System.out.println("Persisted convo with id: "+savedConvo.getId());
 //    }

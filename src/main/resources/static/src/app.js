@@ -4,11 +4,19 @@ export class App {
     this.router = router;
 
     config.map([
-      { route:"", moduleId:"quotes/list",
-        title:"All Quotes", nav:true, name:"home" },
-
-      { route:"about", moduleId:"about/about",
-        title:"About", nav:true}
+      {
+        route: "",
+        moduleId: "quotes/list",
+        nav: true,
+        title: "All Quotes",
+        name: "home"
+      },
+      {
+        route: "about",
+        moduleId: "about/about",
+        nav: true,
+        title: "About"
+      }
     ]);
   }
 }
