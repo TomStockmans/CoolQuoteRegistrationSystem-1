@@ -140,3 +140,4 @@ gradle-app.setting
 ## Aurelia generated during development
 src/main/resources/static/scripts/app-bundle.js
 src/main/resources/static/scripts/app-bundle.js.map
+src/main/resources/static/scripts/vendor-bundle.js
