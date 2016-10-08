@@ -136,3 +136,7 @@ gradle-app.setting
 
 ## OSX
 .DS_Store
+
+## Aurelia generated during development
+src/main/resources/static/scripts/app-bundle.js
+src/main/resources/static/scripts/app-bundle.js.map
