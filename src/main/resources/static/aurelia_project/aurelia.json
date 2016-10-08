@@ -138,9 +138,14 @@
           },
           {
             "name": "whatwg-fetch",
-            "path": "../node_modules/whatwg-fetch"
+            "path": "../node_modules/whatwg-fetch",
+            "main": "fetch"
           },
-          "jquery",
+          {
+            "name": "jquery",
+            "path": "../node_modules/jquery/dist",
+            "main": "jquery"
+          },
           {
             "name": "bootstrap",
             "path": "../node_modules/bootstrap/dist",
