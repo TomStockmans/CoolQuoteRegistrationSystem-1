@@ -8,7 +8,7 @@
         "participants": [
           {
             "name": "Gianni",
-            "victim": false
+            "victim": true
           }
         ],
         "order": 2
