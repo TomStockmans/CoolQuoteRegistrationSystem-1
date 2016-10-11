@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static be.swsb.cqrs.conversation.ConversationTestBuilder.aDefaultConversation;
+import static be.swsb.cqrs.conversation.LineTestBuilder.aSpeechLine;
 import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
 
 
@@ -47,8 +48,8 @@ public class ConversationResourceBaseIntegrationTest {
         Conversation conversation = conversationResource.get(id).readEntity(Conversation.class);
 
         assertThat(conversation.getId()).isEqualTo(id);
-        assertThat(conversation.getPunchLine().getText()).isEqualTo("punch");
-        assertThat(conversation.getLines()).extracting(Line::getText).containsOnly("context");
+        assertThat(conversation.getLines()).extracting(Line::getText).containsOnly("context","punch");
+        assertThat(conversation.getLines()).filteredOn(Line::isPunchLine).extracting(Line::getText).containsOnly("punch");
     }
 
     @Test
@@ -88,9 +89,8 @@ public class ConversationResourceBaseIntegrationTest {
 
     @Test
     public void create_InvalidConversation_ReturnsBadRequest() throws Exception {
-        Line punchLine = new Line();
-        punchLine.setOrder(-1);
-        Conversation conversation = aDefaultConversation().withId(null).withPunchLine(punchLine).build();
+        Line speechLineWithoutParticipant = aSpeechLine().withoutParticipants().withText("derp").build();
+        Conversation conversation = aDefaultConversation().withId(null).withLines(speechLineWithoutParticipant).build();
         Response response = conversationResource.create(conversation);
 
         assertThat(response.getHeaderString("Application-Error")).isEqualTo("The conversation you tried to create is invalid");

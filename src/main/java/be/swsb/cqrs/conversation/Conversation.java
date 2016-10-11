@@ -13,13 +13,11 @@ public class Conversation {
     @Id
     private String id;
     private List<Line> lines;
-    private Line punchLine;
 
     @JsonCreator
-    public Conversation(@JsonProperty("id") String id, @JsonProperty("lines") List<Line> lines, @JsonProperty("punchLine") Line punchLine) {
+    public Conversation(@JsonProperty("id") String id, @JsonProperty("lines") List<Line> lines) {
         this.id = id;
         this.lines = lines;
-        this.punchLine = punchLine;
     }
 
     public String getId() {
@@ -30,23 +28,18 @@ public class Conversation {
         return lines;
     }
 
-    public Line getPunchLine() {
-        return punchLine;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Conversation that = (Conversation) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(lines, that.lines) &&
-                Objects.equals(punchLine, that.punchLine);
+                Objects.equals(lines, that.lines);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, lines, punchLine);
+        return Objects.hash(id, lines);
     }
 
     @Override
@@ -54,7 +47,6 @@ public class Conversation {
         return "Conversation{" +
                 "id='" + id + '\'' +
                 ", lines=" + lines +
-                ", punchLine=" + punchLine +
                 '}';
     }
 }

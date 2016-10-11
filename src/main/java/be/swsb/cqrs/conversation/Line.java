@@ -1,22 +1,18 @@
 package be.swsb.cqrs.conversation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 public class Line {
 
     private String text;
+    private boolean punchLine;
     private LineType lineType;
-    private Collection<Participant> participants;
-    private int order;
-
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
+    private List<Participant> participants;
 
     public String getText() {
         return text;
@@ -24,6 +20,14 @@ public class Line {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public boolean isPunchLine() {
+        return punchLine;
+    }
+
+    public void setPunchLine(boolean punchLine) {
+        this.punchLine = punchLine;
     }
 
     public LineType getLineType() {
@@ -34,11 +38,16 @@ public class Line {
         this.lineType = lineType;
     }
 
-    public Collection<Participant> getParticipants() {
+    @JsonIgnore
+    public boolean isSpeechLine() {
+        return LineType.SPEECH.equals(lineType);
+    }
+
+    public List<Participant> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(Collection<Participant> participants) {
+    public void setParticipants(List<Participant> participants) {
         this.participants = participants;
     }
 
@@ -47,15 +56,15 @@ public class Line {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Line line = (Line) o;
-        return order == line.order &&
-                Objects.equals(text, line.text) &&
+        return Objects.equals(text, line.text) &&
                 lineType == line.lineType &&
+                punchLine == line.punchLine &&
                 Objects.equals(participants, line.participants);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, lineType, participants, order);
+        return Objects.hash(text, lineType, punchLine, participants);
     }
 
     @Override
@@ -63,12 +72,12 @@ public class Line {
         return "Line{" +
                 "text='" + text + '\'' +
                 ", lineType=" + lineType +
+                ", isPunchLine=" + punchLine +
                 ", participants=" + participants +
-                ", order=" + order +
                 '}';
     }
 
     public static boolean isValid(Line line) {
-        return line.order >= 0;
+        return !line.isSpeechLine() || !line.getParticipants().isEmpty();
     }
 }

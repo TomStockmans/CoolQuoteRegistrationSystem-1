@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static be.swsb.cqrs.conversation.LineTestBuilder.aContextLine;
+import static be.swsb.cqrs.conversation.LineTestBuilder.aSpeechLine;
+
 public class ConversationTestBuilder {
 
     private String id;
@@ -19,10 +22,8 @@ public class ConversationTestBuilder {
     }
 
     public static ConversationTestBuilder aDefaultConversation() {
-        Line context = new Line();
-        context.setText("context");
-        Line punchLine = new Line();
-        punchLine.setText("punch");
+        Line context = aContextLine().withText("context").build();
+        Line punchLine = aSpeechLine().asPunchLine().withText("punch").withParticipants(new Participant("Gianni",false)).build();
         List<Line> lines = Arrays.asList(context);
         return aConversation().withId(UUID.randomUUID().toString())
                 .withLines(lines)
@@ -30,7 +31,10 @@ public class ConversationTestBuilder {
     }
 
     public Conversation build() {
-        return new Conversation(id, lines, punchLine);
+        List<Line> allLines = new ArrayList<>();
+        allLines.addAll(lines);
+        allLines.add(punchLine);
+        return new Conversation(id, allLines);
     }
 
     public ConversationTestBuilder withId(String id) {
@@ -54,9 +58,7 @@ public class ConversationTestBuilder {
     }
 
     public ConversationTestBuilder withPunchLine(String punchLine) {
-        Line line = new Line();
-        line.setText(punchLine);
-        this.punchLine = line;
+        this.punchLine = aContextLine().asPunchLine().withText(punchLine).build();
         return this;
     }
 }

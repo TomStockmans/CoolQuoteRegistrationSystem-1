@@ -11,7 +11,6 @@ class ConversationValidator {
     boolean validate(Conversation conversation) {
         List<Line> lines = new ArrayList<>();
         lines.addAll(conversation.getLines());
-        lines.add(conversation.getPunchLine());
         return validateLines(lines);
     }
 
