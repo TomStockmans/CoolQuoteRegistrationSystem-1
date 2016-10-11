@@ -5,9 +5,7 @@ export class Quote {
   @bindable quote = null;
 
   bind() {
-    let allLines = this.quote.lines;
-    allLines.push(this.quote.punchLine);
-    this.lines = allLines;
+    this.lines = this.quote.lines;
   }
 
   unbind() {

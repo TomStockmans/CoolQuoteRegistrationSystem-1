@@ -1,40 +1,40 @@
 [
   {
-    "id": "797fa7a4-4f27-419a-8246-38639c8ed887",
+    "id": "a5dc0604-9978-4310-acc2-e40925197eab",
     "lines": [
       {
         "text": "firstLine",
+        "punchLine": false,
         "lineType": "SPEECH",
         "participants": [
           {
             "name": "Gianni",
             "victim": true
           }
-        ],
-        "order": 2
+        ]
       },
       {
         "text": "secondLine",
+        "punchLine": false,
         "lineType": "SPEECH",
         "participants": [
           {
             "name": "Pablo",
             "victim": false
           }
-        ],
-        "order": 0
+        ]
+      },
+      {
+        "text": "testing...1..2..3..",
+        "punchLine": true,
+        "lineType": "SPEECH",
+        "participants": [
+          {
+            "name": "Dickbutt",
+            "victim": false
+          }
+        ]
       }
-    ],
-    "punchLine": {
-      "text": "testing...1..2..3..",
-      "lineType": "SPEECH",
-      "participants": [
-        {
-          "name": "Dickbutt",
-          "victim": false
-        }
-      ],
-      "order": 9
-    }
+    ]
   }
 ]

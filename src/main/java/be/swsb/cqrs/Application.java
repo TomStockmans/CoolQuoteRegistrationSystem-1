@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @SpringBootApplication
 public class Application
-//        implements CommandLineRunner
+        implements CommandLineRunner
 {
 
     @Autowired
@@ -21,34 +21,31 @@ public class Application
         SpringApplication.run(Application.class, args);
     }
 
-//    @Override
-//    public void run(String... args) throws Exception {
-//        Line punchLine = new Line();
-//        punchLine.setOrder(9);
-//        punchLine.setLineType(LineType.SPEECH);
-//        punchLine.setParticipants(Arrays.asList(new Participant("Dickbutt", false)));
-//        punchLine.setText("testing...1..2..3..");
-//
-//        Line line0 = new Line();
-//        line0.setText("contextLine");
-//        line0.setLineType(LineType.CONTEXT);
-//        line0.setOrder(0);
-//
-//        Line line1 = new Line();
-//        line1.setText("firstLine");
-//        line1.setParticipants(Arrays.asList(new Participant("Gianni", false)));
-//        line1.setLineType(LineType.SPEECH);
-//        line1.setOrder(1);
-//
-//        Line line2 = new Line();
-//        line2.setText("secondLine");
-//        line2.setParticipants(Arrays.asList(new Participant("Pablo", false)));
-//        line2.setLineType(LineType.SPEECH);
-//        line1.setOrder(2);
-//
-//
-//        Conversation conv = new Conversation(UUID.randomUUID().toString(), Arrays.asList(line1, line2), punchLine);
-//        Conversation savedConvo = repo.save(conv);
-//        System.out.println("Persisted convo with id: "+savedConvo.getId());
-//    }
+    @Override
+    public void run(String... args) throws Exception {
+        repo.deleteAll();
+        Line line0 = new Line();
+        line0.setText("contextLine");
+        line0.setLineType(LineType.CONTEXT);
+
+        Line line1 = new Line();
+        line1.setText("firstLine");
+        line1.setParticipants(Arrays.asList(new Participant("Gianni", true)));
+        line1.setLineType(LineType.SPEECH);
+
+        Line line2 = new Line();
+        line2.setText("secondLine");
+        line2.setParticipants(Arrays.asList(new Participant("Pablo", false)));
+        line2.setLineType(LineType.SPEECH);
+
+        Line punchLine = new Line();
+        punchLine.setLineType(LineType.SPEECH);
+        punchLine.setParticipants(Arrays.asList(new Participant("Dickbutt", false)));
+        punchLine.setText("testing...1..2..3..");
+        punchLine.setPunchLine(true);
+
+        Conversation conv = new Conversation(UUID.randomUUID().toString(), Arrays.asList(line1, line2, punchLine));
+        Conversation savedConvo = repo.save(conv);
+        System.out.println("Persisted convo with id: "+savedConvo.getId());
+    }
 }
