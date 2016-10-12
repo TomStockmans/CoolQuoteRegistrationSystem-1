@@ -36,5 +36,43 @@
         ]
       }
     ]
+  },
+  {
+    "id": "a5dc0604-9978-4310-acc2-e40925197eac",
+    "lines": [
+      {
+        "text": "snarf snarf",
+        "punchLine": false,
+        "lineType": "SPEECH",
+        "participants": [
+          {
+            "name": "Snarf",
+            "victim": false
+          }
+        ]
+      },
+      {
+        "text": "Thunder...Thunder...THUNDERcats! Hoooooooooooooooo!",
+        "punchLine": false,
+        "lineType": "SPEECH",
+        "participants": [
+          {
+            "name": "Lion-O",
+            "victim": false
+          }
+        ]
+      },
+      {
+        "text": "Snarf!",
+        "punchLine": true,
+        "lineType": "SPEECH",
+        "participants": [
+          {
+            "name": "Snarf",
+            "victim": true
+          }
+        ]
+      }
+    ]
   }
 ]

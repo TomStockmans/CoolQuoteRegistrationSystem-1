@@ -1,3 +1,6 @@
-dt > .dl-horizontal {
-  margin: 1px;
+quote p {
+  margin: 0px;
+}
+quote dl {
+  margin: 0px;
 }
