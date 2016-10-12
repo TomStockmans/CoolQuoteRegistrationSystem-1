@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static be.swsb.cqrs.conversation.ConversationTestBuilder.CONVERSATION_DATE;
+import static be.swsb.cqrs.conversation.ConversationTestBuilder.CREATED_ON;
 import static be.swsb.cqrs.conversation.ConversationTestBuilder.aDefaultConversation;
 import static be.swsb.cqrs.conversation.LineTestBuilder.aSpeechLine;
 import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
@@ -48,6 +50,8 @@ public class ConversationResourceBaseIntegrationTest {
         Conversation conversation = conversationResource.get(id).readEntity(Conversation.class);
 
         assertThat(conversation.getId()).isEqualTo(id);
+        assertThat(conversation.getCreatedOn()).isEqualTo(CREATED_ON);
+        assertThat(conversation.getConversationDate()).isEqualTo(CONVERSATION_DATE);
         assertThat(conversation.getLines()).extracting(Line::getText).containsOnly("context","punch");
         assertThat(conversation.getLines()).filteredOn(Line::isPunchLine).extracting(Line::getText).containsOnly("punch");
     }
