@@ -33,7 +33,7 @@ public class ConversationTestBuilder {
         Line punchLine = aSpeechLine().asPunchLine().withText("punch").withParticipants(new Participant("Gianni",false)).build();
         return aConversation()
                 .withId(UUID.randomUUID().toString())
-//                .withCreatedOn(CREATED_ON)
+                .withCreatedOn(CREATED_ON)
                 .withConversationDate(CONVERSATION_DATE)
                 .withLines(context)
                 .withPunchLine(punchLine);

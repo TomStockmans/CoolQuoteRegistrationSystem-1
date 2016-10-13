@@ -54,7 +54,6 @@ public class ConversationResourceBaseIntegrationTest {
         WebTarget baseTarget = JerseyClientBuilder.newBuilder()
                 .build()
                 .register(logFeature)
-//                .register(JavaTimeModule.class)
                 .target(baseUrl);
         conversationResource = WebResourceFactory.newResource(ConversationResource.class, baseTarget);
     }
