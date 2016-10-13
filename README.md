@@ -28,6 +28,8 @@ Install the `Mongo Plugin` in IntelliJ.
 
 Add `192.168.99.100:27017` as a new connection, _et voila_, happy querying.
 
+As an alternative, you can also install [RoboMongo](https://robomongo.org/)
+
 ## Serving static content
 We are now only serving static content, and therefore we don't need an `IndexController` anymore.
 
@@ -43,9 +45,9 @@ The `spring.jersey.type=filter` property will run Jersey as a Filter instead of 
 The other thing I had to do was add the `spring-boot-starter-thymeleaf` dependency, so that there's an automagic ViewResolver that tries to find a matching filename in `/resources/static`.
 
 ## Info on the Aurelia App
-I generated it using `au new --here` and modifying the default names to contain CQRS instead of default or whatever.
 
-To be able to work with this way of Aurelia app, install the aurelia-cli.
+### Aurelia CLI
+To be able to work with this way of Aurelia app, install the aurelia-cli as follows:
 
 ```
 npm install -g aurelia-cli
@@ -53,8 +55,25 @@ npm install -g aurelia-cli
 
 Or follow [this guide](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/the-aurelia-cli/1) for more info.
 
+### Generation
+I generated it using `au new --here` and modifying the default names to contain CQRS instead of default or whatever.
+
 ### IntelliJ pro-tip
 Mark `src/main/resources/static/node_modules` as _Excluded_. :+1:
+
+### Building and starting
+First, since node_modules was excluded, you have to install all the dependencies.
+From the static dir, run:
+
+```
+npm install
+```
+
+Next, from the static dir, run the app via the CLI:
+
+```
+au run
+```
 
 ## IntegrationTest magic
 ### Overriding application.properties
@@ -68,7 +87,3 @@ This is why we simply use the `Application` and `JerseyConfig` configuration cla
 We're calling our _Resource_ with the `jersey-proxy-client` framework.
 
 This is why we're not `@Autowiring` our own _Resource_, but instead using a `WebResourceFactory` to proxy our _Resource_, and do all the actual http calls, marshalling and error handling via `jersey-client`.
-
-However, there's still something wrong with our [ConversationResourceBaseIntegrationTest.create_InvalidConversation_ReturnsBadRequest](be.swsb.cqrs.conversation.ConversationResourceBaseIntegrationTest.create_InvalidConversation_ReturnsBadRequest) test.
-
-Eventhough the code is returning a BAD_REQUEST (400), the status will be a NOT_FOUND (404), and my guess this is due to the Resource Proxy.
