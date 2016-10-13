@@ -28,6 +28,8 @@ Install the `Mongo Plugin` in IntelliJ.
 
 Add `192.168.99.100:27017` as a new connection, _et voila_, happy querying.
 
+As an alternative, you can also install [RoboMongo](https://robomongo.org/)
+
 ## Serving static content
 We are now only serving static content, and therefore we don't need an `IndexController` anymore.
 
