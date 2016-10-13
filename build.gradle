@@ -27,13 +27,13 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.4.1.RELEASE") //so we can serve static content from src/main/resources/static/
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:1.4.1.RELEASE")
 
-    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.3") //to automatically deserialize LocalDateTimes etc.
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.3") //to be able to deserialize LocalDateTimes etc.
 
 
     testCompile("junit:junit:4.12")
     testCompile("org.assertj:assertj-core:3.2.0")
     testCompile("org.mockito:mockito-core:2.0.31-beta")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.boot:spring-boot-starter-test:1.4.1.RELEASE")
     testCompile("org.glassfish.jersey.core:jersey-client:2.23.2")
     testCompile("org.glassfish.jersey.ext:jersey-proxy-client:2.23.2")
 }

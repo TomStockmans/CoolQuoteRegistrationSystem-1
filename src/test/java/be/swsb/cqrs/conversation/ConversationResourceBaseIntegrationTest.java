@@ -9,11 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.ws.rs.client.WebTarget;
@@ -23,18 +19,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static be.swsb.cqrs.conversation.ConversationTestBuilder.CONVERSATION_DATE;
-import static be.swsb.cqrs.conversation.ConversationTestBuilder.CREATED_ON;
-import static be.swsb.cqrs.conversation.ConversationTestBuilder.aDefaultConversation;
+import static be.swsb.cqrs.conversation.ConversationTestBuilder.*;
 import static be.swsb.cqrs.conversation.LineTestBuilder.aSpeechLine;
 import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {Application.class, JerseyConfig.class})
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, JerseyConfig.class})
-@WebIntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {Application.class, JerseyConfig.class})
 public class ConversationResourceBaseIntegrationTest {
 
     @LocalServerPort
@@ -98,6 +88,7 @@ public class ConversationResourceBaseIntegrationTest {
         Conversation conversation = aDefaultConversation().withId(null).build();
         Response response = conversationResource.create(conversation);
 
+        System.out.println("Response: "+response);
         assertThat(response).hasStatus(Response.Status.CREATED);
         assertThat(response).hasLocationContaining(baseUrl+"/conversation/");
     }

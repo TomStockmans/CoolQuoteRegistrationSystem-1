@@ -31,12 +31,11 @@ public class ConversationTestBuilder {
     public static ConversationTestBuilder aDefaultConversation() {
         Line context = aContextLine().withText("context").build();
         Line punchLine = aSpeechLine().asPunchLine().withText("punch").withParticipants(new Participant("Gianni",false)).build();
-        List<Line> lines = Arrays.asList(context);
         return aConversation()
                 .withId(UUID.randomUUID().toString())
                 .withCreatedOn(CREATED_ON)
                 .withConversationDate(CONVERSATION_DATE)
-                .withLines(lines)
+                .withLines(context)
                 .withPunchLine(punchLine);
     }
 
