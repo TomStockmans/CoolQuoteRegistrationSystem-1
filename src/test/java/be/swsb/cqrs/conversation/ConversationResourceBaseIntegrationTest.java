@@ -8,9 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
@@ -25,21 +29,28 @@ import static be.swsb.cqrs.conversation.ConversationTestBuilder.aDefaultConversa
 import static be.swsb.cqrs.conversation.LineTestBuilder.aSpeechLine;
 import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
 
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {Application.class, JerseyConfig.class})
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class, JerseyConfig.class})
 @WebIntegrationTest
 public class ConversationResourceBaseIntegrationTest {
 
+    @LocalServerPort
+    private int port;
+
     @Autowired
     private ConversationRepository repo;
 
     private ConversationResource conversationResource;
+    private String baseUrl;
 
     @Before
     public void setUp() throws Exception {
         repo.deleteAll(); //clean slate before every test run
-        WebTarget baseTarget = JerseyClientBuilder.newBuilder().build().target("http://localhost:9000/api");
+        baseUrl = "http://localhost:" + port + "/api";
+        WebTarget baseTarget = JerseyClientBuilder.newBuilder().build().target(baseUrl);
         conversationResource = WebResourceFactory.newResource(ConversationResource.class, baseTarget);
     }
 
@@ -88,7 +99,7 @@ public class ConversationResourceBaseIntegrationTest {
         Response response = conversationResource.create(conversation);
 
         assertThat(response).hasStatus(Response.Status.CREATED);
-        assertThat(response).hasLocationContaining("http://localhost:9000/api/conversation/");
+        assertThat(response).hasLocationContaining(baseUrl+"/conversation/");
     }
 
     @Test
