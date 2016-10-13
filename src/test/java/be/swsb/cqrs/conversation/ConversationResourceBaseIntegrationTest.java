@@ -1,9 +1,8 @@
 package be.swsb.cqrs.conversation;
 
-import be.swsb.cqrs.Application;
-import be.swsb.cqrs.JerseyConfig;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +15,10 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,8 +27,10 @@ import static be.swsb.cqrs.conversation.LineTestBuilder.aSpeechLine;
 import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {Application.class, JerseyConfig.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class ConversationResourceBaseIntegrationTest {
+
+    private static Logger logger = Logger.getLogger("ConversationResourceTest");
 
     @LocalServerPort
     private int port;
@@ -40,7 +45,17 @@ public class ConversationResourceBaseIntegrationTest {
     public void setUp() throws Exception {
         repo.deleteAll(); //clean slate before every test run
         baseUrl = "http://localhost:" + port + "/api";
-        WebTarget baseTarget = JerseyClientBuilder.newBuilder().build().target(baseUrl);
+
+        StreamHandler soutHandler = new StreamHandler(System.out, new SimpleFormatter());
+        soutHandler.setLevel(Level.ALL);
+        logger.addHandler(soutHandler);
+        logger.setLevel(Level.ALL);
+        LoggingFeature logFeature = new LoggingFeature(logger, LoggingFeature.Verbosity.PAYLOAD_ANY);
+        WebTarget baseTarget = JerseyClientBuilder.newBuilder()
+                .build()
+                .register(logFeature)
+//                .register(JavaTimeModule.class)
+                .target(baseUrl);
         conversationResource = WebResourceFactory.newResource(ConversationResource.class, baseTarget);
     }
 
@@ -88,7 +103,6 @@ public class ConversationResourceBaseIntegrationTest {
         Conversation conversation = aDefaultConversation().withId(null).build();
         Response response = conversationResource.create(conversation);
 
-        System.out.println("Response: "+response);
         assertThat(response).hasStatus(Response.Status.CREATED);
         assertThat(response).hasLocationContaining(baseUrl+"/conversation/");
     }
