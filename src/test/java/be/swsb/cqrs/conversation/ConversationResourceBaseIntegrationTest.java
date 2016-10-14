@@ -1,43 +1,60 @@
 package be.swsb.cqrs.conversation;
 
-import be.swsb.cqrs.Application;
-import be.swsb.cqrs.JerseyConfig;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.client.proxy.WebResourceFactory;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static be.swsb.cqrs.conversation.ConversationTestBuilder.aDefaultConversation;
+import static be.swsb.cqrs.conversation.ConversationTestBuilder.*;
 import static be.swsb.cqrs.conversation.LineTestBuilder.aSpeechLine;
 import static be.swsb.jaxrs.test.ResponseAssertions.assertThat;
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, JerseyConfig.class})
-@WebIntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class ConversationResourceBaseIntegrationTest {
+
+    private static Logger logger = Logger.getLogger("ConversationResourceTest");
+
+    @LocalServerPort
+    private int port;
 
     @Autowired
     private ConversationRepository repo;
 
     private ConversationResource conversationResource;
+    private String baseUrl;
 
     @Before
     public void setUp() throws Exception {
         repo.deleteAll(); //clean slate before every test run
-        WebTarget baseTarget = JerseyClientBuilder.newBuilder().build().target("http://localhost:9000/api");
+        baseUrl = "http://localhost:" + port + "/api";
+
+        StreamHandler soutHandler = new StreamHandler(System.out, new SimpleFormatter());
+        soutHandler.setLevel(Level.ALL);
+        logger.addHandler(soutHandler);
+        logger.setLevel(Level.ALL);
+        LoggingFeature logFeature = new LoggingFeature(logger, LoggingFeature.Verbosity.PAYLOAD_ANY);
+        WebTarget baseTarget = JerseyClientBuilder.newBuilder()
+                .build()
+                .register(logFeature)
+                .target(baseUrl);
         conversationResource = WebResourceFactory.newResource(ConversationResource.class, baseTarget);
     }
 
@@ -48,6 +65,8 @@ public class ConversationResourceBaseIntegrationTest {
         Conversation conversation = conversationResource.get(id).readEntity(Conversation.class);
 
         assertThat(conversation.getId()).isEqualTo(id);
+        assertThat(conversation.getCreatedOn()).isEqualTo(CREATED_ON);
+        assertThat(conversation.getConversationDate()).isEqualTo(CONVERSATION_DATE);
         assertThat(conversation.getLines()).extracting(Line::getText).containsOnly("context","punch");
         assertThat(conversation.getLines()).filteredOn(Line::isPunchLine).extracting(Line::getText).containsOnly("punch");
     }
@@ -84,7 +103,7 @@ public class ConversationResourceBaseIntegrationTest {
         Response response = conversationResource.create(conversation);
 
         assertThat(response).hasStatus(Response.Status.CREATED);
-        assertThat(response).hasLocationContaining("http://localhost:9000/api/conversation/");
+        assertThat(response).hasLocationContaining(baseUrl+"/conversation/");
     }
 
     @Test

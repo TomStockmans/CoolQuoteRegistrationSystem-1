@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -44,7 +46,9 @@ public class Application
         punchLine.setText("testing...1..2..3..");
         punchLine.setPunchLine(true);
 
-        Conversation conv = new Conversation(UUID.randomUUID().toString(), Arrays.asList(line1, line2, punchLine));
+        LocalDateTime createdOn = LocalDateTime.now();
+        LocalDate conversationDate = LocalDate.now();
+        Conversation conv = new Conversation(UUID.randomUUID().toString(), Arrays.asList(line1, line2, punchLine), createdOn, conversationDate);
         Conversation savedConvo = repo.save(conv);
         System.out.println("Persisted convo with id: "+savedConvo.getId());
     }

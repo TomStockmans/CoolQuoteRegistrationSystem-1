@@ -9,5 +9,6 @@ public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
         register(ConversationResourceBase.class);
+//        register(LoggingFeature.class);
     }
 }

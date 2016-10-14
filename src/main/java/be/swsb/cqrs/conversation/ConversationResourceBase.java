@@ -21,8 +21,21 @@ public class ConversationResourceBase implements ConversationResource {
     private ConversationValidator conversationValidator;
 
     @Override
+    @GET
     public Response all() {
         return Response.ok(repo.findAll()).build();
+    }
+
+    @POST
+    @Consumes(APPLICATION_JSON)
+    @Override
+    public Response create(Conversation newConversation) {
+        if (!conversationValidator.validate(newConversation)) {
+            return Response.status(Response.Status.BAD_REQUEST).header("Application-Error", "The conversation you tried to create is invalid").build();
+        }
+        Conversation conv = repo.save(newConversation);
+        URI uri = UriBuilder.fromResource(ConversationResourceBase.class).path(conv.getId()).build();
+        return Response.created(uri).build();
     }
 
     @GET
@@ -45,18 +58,6 @@ public class ConversationResourceBase implements ConversationResource {
         }
         repo.delete(id);
         return Response.ok().build();
-    }
-
-    @POST
-    @Consumes(APPLICATION_JSON)
-    @Override
-    public Response create(Conversation newConversation) {
-        if (!conversationValidator.validate(newConversation)) {
-            return Response.status(Response.Status.BAD_REQUEST).header("Application-Error", "The conversation you tried to create is invalid").build();
-        }
-        Conversation conv = repo.save(newConversation);
-        URI uri = UriBuilder.fromResource(ConversationResourceBase.class).path(conv.getId()).build();
-        return Response.created(uri).build();
     }
 
     @PUT //should probably be POST instead of PUT because PUT is supposed to be idempotent

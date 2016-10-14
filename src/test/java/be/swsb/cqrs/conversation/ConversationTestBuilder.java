@@ -1,5 +1,7 @@
 package be.swsb.cqrs.conversation;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +12,14 @@ import static be.swsb.cqrs.conversation.LineTestBuilder.aSpeechLine;
 
 public class ConversationTestBuilder {
 
+    public static final LocalDateTime CREATED_ON = LocalDateTime.of(2016, 10, 12, 13, 32, 3);
+    public static final LocalDate CONVERSATION_DATE = LocalDate.of(2016, 10, 12);
+
     private String id;
     private List<Line> lines = new ArrayList<>();
     private Line punchLine;
+    private LocalDateTime createdOn;
+    private LocalDate conversationDate;
 
     private ConversationTestBuilder() {
     }
@@ -24,9 +31,11 @@ public class ConversationTestBuilder {
     public static ConversationTestBuilder aDefaultConversation() {
         Line context = aContextLine().withText("context").build();
         Line punchLine = aSpeechLine().asPunchLine().withText("punch").withParticipants(new Participant("Gianni",false)).build();
-        List<Line> lines = Arrays.asList(context);
-        return aConversation().withId(UUID.randomUUID().toString())
-                .withLines(lines)
+        return aConversation()
+                .withId(UUID.randomUUID().toString())
+                .withCreatedOn(CREATED_ON)
+                .withConversationDate(CONVERSATION_DATE)
+                .withLines(context)
                 .withPunchLine(punchLine);
     }
 
@@ -34,11 +43,21 @@ public class ConversationTestBuilder {
         List<Line> allLines = new ArrayList<>();
         allLines.addAll(lines);
         allLines.add(punchLine);
-        return new Conversation(id, allLines);
+        return new Conversation(id, allLines, createdOn, conversationDate);
     }
 
     public ConversationTestBuilder withId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public ConversationTestBuilder withCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+        return this;
+    }
+
+    public ConversationTestBuilder withConversationDate(LocalDate conversationDate) {
+        this.conversationDate = conversationDate;
         return this;
     }
 

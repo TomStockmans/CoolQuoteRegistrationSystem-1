@@ -14,13 +14,13 @@ public interface ConversationResource {
     @GET
     Response all();
 
-    @GET
-    @Path("{id}")
-    Response get(@PathParam("id") String id);
-
     @POST
     @Consumes(APPLICATION_JSON)
     Response create(Conversation newConversation);
+
+    @GET
+    @Path("{id}")
+    Response get(@PathParam("id") String id);
 
     @DELETE
     @Path("{id}")
