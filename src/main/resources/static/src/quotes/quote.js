@@ -1,14 +1,16 @@
-import {bindable} from "aurelia-framework";
+import {json} from "aurelia-fetch-client";
 
 export class Quote {
-
-  @bindable quote = null;
-
-  bind() {
-    this.lines = this.quote.lines;
+  constructor(participant, text) {
+    this.lines = [{
+      lineType: 'SPEECH',
+      participants: [{name:participant, victim:false}],
+      text: text
+    }];
+    // this.conversationDate = new Date();
   }
-
-  unbind() {
-    this.lines = [];
+  
+  json() {
+    return json(this);
   }
 }

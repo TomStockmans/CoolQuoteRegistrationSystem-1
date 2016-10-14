@@ -28,7 +28,7 @@ export function configure(aurelia) {
   http.configure(config => {
     config
       .useStandardConfiguration()
-      .withBaseUrl('api/')
+      .withBaseUrl('http://localhost:8080/api/')
       .withDefaults({
         credentials: 'same-origin',
         headers: {

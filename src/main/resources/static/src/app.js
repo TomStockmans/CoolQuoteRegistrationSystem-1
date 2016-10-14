@@ -12,6 +12,12 @@ export class App {
         name: "home"
       },
       {
+        route: "quotes/add",
+        moduleId: "quotes/add/add",
+        nav: true,
+        title: "Add new Quote"
+      },
+      {
         route: "about",
         moduleId: "about/about",
         nav: true,

@@ -9,6 +9,15 @@ export class Quotes {
   }
 
   all() {
-    return this.http.fetch("conversation.json").then(resp => resp.json());
+    return this.http.fetch("conversation").then(resp => resp.json());
+  }
+  
+  save(quote) {
+    return this.http
+      .fetch("conversation", {
+        method: "post",
+        body: quote.json()
+      })
+      .then(resp => resp.json());
   }
 }
