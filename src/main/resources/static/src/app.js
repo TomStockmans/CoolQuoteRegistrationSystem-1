@@ -1,5 +1,8 @@
+import {WebAPI} from './web-api';
+
 export class App {
-  constructor() {
-    this.message = 'Hello World!';
-  }
+    addQoute() {
+      new WebAPI().saveQuote(this.content);
+    }
+  
 }

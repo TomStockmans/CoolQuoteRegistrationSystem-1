@@ -1,3 +1,7 @@
 <template>
-  <h1>${message}</h1>
+  <p>${content}</p>
+  <form submit.trigger="addQoute()">
+    <textarea rows="4" cols="50" value.bind="content"></textarea>
+    <button type="submit">Submit</button>
+  </form>
 </template>
