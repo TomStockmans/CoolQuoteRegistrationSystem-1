@@ -27,6 +27,10 @@ export class HttpRequest {
         return this.get(path + "/" + pathParams);
     }
 
+    getWithQueryParams(path, queryParams) {
+        return this.get(path + "/?" + queryParams);
+    }
+
     post(path, bodyJson) {
         this.client.fetch(path, {
             method: 'post',
