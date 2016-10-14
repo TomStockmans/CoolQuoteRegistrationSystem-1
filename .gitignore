@@ -136,3 +136,6 @@ gradle-app.setting
 
 ## OSX
 .DS_Store
+
+### Manual additions:
+*-bundle.js*
