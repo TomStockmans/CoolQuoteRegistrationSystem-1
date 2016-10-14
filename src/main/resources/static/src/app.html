@@ -1,6 +1,11 @@
 <template>
-  <a href="#quotes">Quotes</a>
-  <a href="#addQuoteBlock">Add quote block</a>
-  <a href="#searchquotes">SearchQuotes</a>
-<router-view class="col-md-8"></router-view>
+  <div id="navbar">
+    <ul>
+      <li><img src="../../assets/logo.png" style="padding: 2px;"/></li>
+      <li><a href="#quotes">Quotes</a></li>
+      <li><a href="#addQuoteBlock">Add quote block</a></li>
+      <li><a href="#searchquotes">SearchQuotes</a></li>
+    </ul>
+  </div>
+  <div id="content" ><router-view class="col-md-8"></router-view></div>
 </template>
