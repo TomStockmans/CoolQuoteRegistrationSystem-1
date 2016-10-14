@@ -5,26 +5,42 @@ import {ConversationsRequester} from './conversationsRequester';
 
 
 function parseRawLine(rawLine) {
-  let parserFunction = getLineParserFunction(rawLine);
-  return parserFunction(rawLine);
+  let type = parseType(rawLine);
+  let text = parseText(rawLine);
+  let punchLine = parsePunchLine(rawLine);
+  let author = parseAuthor(rawLine);
+
+  return new Line(type, text, author, punchLine);
 }
 
-function getLineParserFunction(rawLine) {
-  if (rawLine.startsWith('/c:')) {
-    return contextLineParser;
+function parseType(rawLine) {
+  if (rawLine.startsWith('/c') || rawLine.startsWith('/p/c')) {
+    return 'CONTEXT';
   }
-  return speechLineParser;
+  return 'SPEECH';
 }
 
-function contextLineParser(rawLine) {
-  return new Line('CONTEXT', rawLine.substring(3));
+function removeFlags(rawLine) {
+  return rawLine.replace('/c', '').replace('/p', '');
 }
 
-function speechLineParser(rawLine) {
-  let lineParts = rawLine.split(':',2);
-  let author = lineParts[0];
-  let content = lineParts[1];
-  return new Line('SPEECH', content, author);
+function parseText(rawLine) {
+  return removeFlags(rawLine).replace(/.*:/, '');
+}
+
+function parsePunchLine(rawLine) {
+  if (rawLine.startsWith('/p') || rawLine.startsWith('/c/p')) {
+    return true;
+  }
+  return false;
+}
+
+function parseAuthor(rawLine) {
+  if (rawLine.indexOf(':') === -1) {
+    return '';
+  }
+
+  return removeFlags(rawLine).replace(/:.*/, '');
 }
 
 export class QuoteBlock {
