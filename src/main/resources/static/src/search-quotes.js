@@ -5,13 +5,13 @@ export class SearchQuotes {
 
   constructor() {
     this.participant = undefined;
-    this.victim = undefined;
     this.response = {};
   }
 
   find() {
-    if (this.participant || this.victim) {
-      this.response = new ConversationsRequester().findConversation(this.participant, this.victim);
+    this.response = {};
+    if (!(this.participant == undefined || this.participant == "")) {
+      this.response = new ConversationsRequester().findConversation(this.participant);
     }
   }
 }

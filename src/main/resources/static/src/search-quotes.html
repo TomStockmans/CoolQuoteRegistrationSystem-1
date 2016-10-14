@@ -3,17 +3,18 @@
 
 	<div class="col-md-6">
 		<form class="form-group" submit.trigger="find()">
-			<input type="text" class="form-control speech" placeholder="participant" value.bind="participant">
-			<input type="text" class="form-control speech" placeholder="victim" value.bind="victim"><br />
+			<input type="text" class="form-control speech" placeholder="participant" value.bind="participant"><br />
 			<button type="submit" class="btn btn-info">Zoek</button>
 		</form>
 
-		<div repeat.for="conversation of response.body">
-			<table>
-				<tr repeat.for="line of conversation.lines">
-					<td if.bind="line.lineType !== 'CONTEXT'"><span repeat.for="participant of line.participants">${participant.name} </span></td>
-					<td>${line.text}</td>
-				</tr>
-			</table><br />
+		<div class="row" repeat.for="conversation of response.body">
+			<div class="col-md-6">
+				<ul class="list-group">
+					<li class="list-group-item ${line.lineType === 'SPEECH'? 'list-group-item-info' : 'list-group-item-warning'}" repeat.for="line of conversation.lines">
+						<span class="italic" show.bind="line.lineType === 'SPEECH'" repeat.for="participant of line.participants" id="author">${participant.name}:</span>
+						<span id="content" show.bind="line.text">${line.text}</span>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>

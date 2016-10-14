@@ -29,7 +29,7 @@ public class ConversationValidatorTest {
     @Test
     public void validate_AllSpeechLinesHaveAtLeast1Participant_Validates() throws Exception {
         Line punchLine = aContextLine().asPunchLine().withText("Snarf").withoutParticipants().build();
-        Line textLine = aSpeechLine().withText("I said this line").withParticipants(new Participant("Gianni",false)).build();
+        Line textLine = aSpeechLine().withText("I said this line").withParticipants(new Participant("Gianni")).build();
         Conversation conversation = aConversation().withId(null).withLines(textLine).withPunchLine(punchLine).build();
 
         assertThat(validator.validate(conversation)).isTrue();
