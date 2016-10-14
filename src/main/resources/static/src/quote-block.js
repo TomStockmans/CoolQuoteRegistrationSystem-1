@@ -1,15 +1,21 @@
 import {WebAPI} from './web-api';
 import {Conversation} from './conversation';
+import {Line} from './line';
+
+
+function parseRawLine(rawLine) {
+  let lineParts = rawLine.split(':',2);
+  return new Line(lineParts[0], lineParts[1]);
+}
 
 export class QuoteBlock {
     addQoute() {
       let conversation = new Conversation();
       
-      this.content.split('\n').forEach(line => conversation.addLine(line));
-      // COMMENT: dit kan je ook doen door conversation.addLine rechtstreeks door te geven, maar dan moet je this binden
-      // this.content.split('\n').forEach(conversation.addLine.bind(conversation));
-      
+      this.content.split('\n')
+        .map(parseRawLine)
+        .forEach(line => conversation.addLine(line));
+
       new WebAPI().saveQuote(conversation);
     }
-  
 }

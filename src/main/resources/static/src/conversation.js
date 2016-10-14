@@ -1,3 +1,5 @@
+import {Line} from './line';
+
 export class Conversation {
     constructor() {
         this.lines = [];
