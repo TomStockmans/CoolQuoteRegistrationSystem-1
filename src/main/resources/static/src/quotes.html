@@ -1,15 +1,11 @@
 <template>
 	<div class="text-center">
 		<h2>Quotes</h2>
-		<ul>
-		<li repeat.for="conversation of response.body">
-			<ul>
-			<li repeat.for="line of conversation.lines">
-				${line.text}
 
-			</li>
-			</ul>
-		</li>
-		</ul>
+		<div repeat.for="conversation of response.body">
+			<table>
+				<tr repeat.for="line of conversation.lines"><td><span repeat.for="participant of line.participants">${participant.name} </span></td><td>${line.text}</td></tr>
+			</table><br />
+		</div>
 	</div>
 </template>
