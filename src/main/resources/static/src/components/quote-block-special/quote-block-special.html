@@ -1,0 +1,12 @@
+<template>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-body"></div>
+        </div>
+        <form class="form-group" submit.trigger="addQoute()">
+            <label for="quote">Fill in your quotes</label>
+            <textarea class="form-control" id="quote" rows="4" cols="50" value.bind="content"></textarea>
+            <input type="submit" class="btn btn-info" value="Verzenden die handel!">
+        </form>
+    </div>
+</template>

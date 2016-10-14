@@ -6,17 +6,20 @@
     "type": "git",
     "url": "https://github.com/SoftwareSandbox/CoolQuoteRegistrationSystem.git"
   },
-  "scripts":{
-    "setup":"npm install -g aurelia-cli && npm install",
+  "scripts": {
+    "setup": "npm install -g aurelia-cli && npm install",
     "dev": "au run"
   },
   "license": "MIT",
   "dependencies": {
+    "aurelia-animator-css": "^1.0.0",
     "aurelia-bootstrapper": "^1.0.0",
     "aurelia-fetch-client": "^1.0.0",
-    "aurelia-animator-css": "^1.0.0",
     "aurelia-router": "^1.0.0",
-    "bluebird": "^3.4.1"
+    "bluebird": "^3.4.1",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.6.3",
+    "jquery": "^3.1.1"
   },
   "peerDependencies": {},
   "devDependencies": {
