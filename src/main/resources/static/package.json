@@ -8,7 +8,7 @@
   },
   "scripts": {
     "setup": "npm install -g aurelia-cli && npm install",
-    "dev": "au run"
+    "dev": "au run --watch"
   },
   "license": "MIT",
   "dependencies": {
