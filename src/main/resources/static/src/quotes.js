@@ -1,4 +1,8 @@
-export class Quotes {
-  message = "Hier komt een overzicht van de quotes";
+import {ConversationsRequester} from './conversationsRequester';
 
+export class Quotes {
+
+   constructor() {
+       this.response =  new ConversationsRequester().getAllConversations();
+    }
 }
