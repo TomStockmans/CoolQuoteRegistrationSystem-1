@@ -87,3 +87,48 @@ This is why we simply use the `Application` and `JerseyConfig` configuration cla
 We're calling our _Resource_ with the `jersey-proxy-client` framework.
 
 This is why we're not `@Autowiring` our own _Resource_, but instead using a `WebResourceFactory` to proxy our _Resource_, and do all the actual http calls, marshalling and error handling via `jersey-client`.
+
+
+## Routing
+In our app.js we added the routing-configuration.
+```
+//app.js
+...
+ router: Router;
+
+    configureRouter(config: RouterConfiguration, router: Router){
+      config.title = 'Contacts';
+      config.map([
+        { route: '', moduleId: 'quotes', title: 'Quotes'},
+        { route: 'quotes', moduleId: 'quotes', title: 'Quotes'},
+        { route: 'searchquotes', moduleId: 'search-quotes', title: 'SearchQuotes'}
+      ]);
+
+      this.router = router;
+    }
+```
+
+When you go to '#quotes' you'll go to the module with id 'quotes'.
+Aurelia searches for a html file which name matches the moduleId.
+
+The html file can be like this :
+```
+//quotes.html
+<template>
+  <div class="text-center">
+    <h2>${message}</h2>
+  </div>
+</template>
+```
+
+The most important thing about the template are the ```<template></template>```-tags.
+App.html contains the ```<router-view class="col-md-8"></router-view>```-tag and renders the templates based on the current route.
+
+The html page has a corresponding javascript-file which has the same name as the html-file.
+
+ ```
+ //quotes.js
+ export class Quotes {
+      message = "Hier komt een overzicht van de quotes";
+ }
+ ```
