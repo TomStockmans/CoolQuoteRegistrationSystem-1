@@ -10,7 +10,7 @@ public class LineTest {
 
     @Test
     public void aSpeechLine_WhenItHasLeast1Participant_IsValid() throws Exception {
-        Line validLine = aSpeechLine().withParticipants(new Participant("Gianni", false)).build();
+        Line validLine = aSpeechLine().withParticipants(new Participant("Gianni")).build();
         assertThat(Line.isValid(validLine)).isTrue();
     }
 

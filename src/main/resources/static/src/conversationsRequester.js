@@ -13,20 +13,8 @@ export class ConversationsRequester {
         return this.httpRequest.getWithParams("conversation", id);
     }
 
-    findConversation(participant, victim) {
-        var querystring = "";
-        if(!(participant == undefined || participant == "")) {
-            querystring +="participant=" + participant;
-
-            if(!(victim == undefined || victim == "")) {
-                querystring +="&victim=" + victim;
-            }
-        }
-
-        else if(victim !== undefined) {
-            querystring +="victim=" + victim;
-        }
-        
+    findConversation(participant) {
+        var querystring = "participant=" + participant;
         return this.httpRequest.getWithQueryParams("conversation/find", querystring);
     }
 
