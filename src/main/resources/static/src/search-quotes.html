@@ -1,20 +1,11 @@
 <template>
-	<div class="text-center">
-		<h2>${message}</h2>
+	<h2>${message}</h2>
 
-		<form submit.trigger="find()">
-			<table>
-				<tr>
-					<th>Participant</th>
-					<th><input type="text" value.bind="participant"></th>
-				</tr>
-				<tr>
-					<td>Victim</td>
-					<td><input type="text" value.bind="victim"></td>
-				</tr>
-			</table>
-
-			<button type="submit">Zoek</button>
+	<div class="col-md-6">
+		<form class="form-group" submit.trigger="find()">
+			<input type="text" class="form-control speech" placeholder="participant" value.bind="participant">
+			<input type="text" class="form-control speech" placeholder="victim" value.bind="victim"><br />
+			<button type="submit" class="btn btn-info">Zoek</button>
 		</form>
 
 		<div repeat.for="conversation of response.body">
