@@ -35,6 +35,16 @@ body {
     background-color: #111;
 }
 
+.context {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+}
+
+.speech {
+  color: #31708f;
+  background-color: #d9edf7;
+}
+
 .splash {
   text-align: center;
   margin: 10% 0 0 0;
