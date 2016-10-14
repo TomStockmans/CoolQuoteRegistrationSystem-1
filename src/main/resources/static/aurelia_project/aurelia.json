@@ -117,6 +117,20 @@
           "aurelia-templating-binding",
           "aurelia-fetch-client",
           {
+            "name": "font-awesome",
+            "path": "../node_modules/font-awesome/",
+            "main": "",
+            "resources": [
+              "css/font-awesome.min.css"
+            ]
+          },
+          "jquery",
+          {
+            "name": "bootstrap",
+            "path": "../node_modules/bootstrap/dist/js",
+            "main": "bootstrap"
+          },
+          {
             "name": "text",
             "path": "../scripts/text"
           },
