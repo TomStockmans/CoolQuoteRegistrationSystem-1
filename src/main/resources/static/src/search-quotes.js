@@ -10,6 +10,7 @@ export class SearchQuotes {
   }
 
   find() {
+    this.response = {};
     if (this.participant || this.victim) {
       this.response = new ConversationsRequester().findConversation(this.participant, this.victim);
     }
