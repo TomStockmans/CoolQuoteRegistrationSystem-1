@@ -41,7 +41,7 @@ export class QuoteBlockSpecial {
         this.context.content = '';
     }
 
-    addQoute() {
+    addQuote() {
         new ConversationsRequester().postConversation(this.conversation);
         this.conversation = new Conversation();
     }
