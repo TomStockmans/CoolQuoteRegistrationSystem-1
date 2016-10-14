@@ -22,6 +22,10 @@ public interface ConversationResource {
     @Path("{id}")
     Response get(@PathParam("id") String id);
 
+    @GET
+    @Path("find")
+    Response find(@QueryParam("participant") String participant, @QueryParam("victim") String victim);
+
     @DELETE
     @Path("{id}")
     Response delete(@PathParam("id") String id);
