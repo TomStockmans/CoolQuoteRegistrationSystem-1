@@ -1,39 +1,48 @@
-import {WebAPI} from '../../web-api';
-import {Conversation} from '../../conversation';
-import {Line} from '../../line';
+import {Conversation} from "../../conversation";
+import {Line} from "../../line";
+import {ConversationsRequester} from "../../conversationsRequester";
 
-
-function parseRawLine(rawLine) {
-    let parserFunction = getLineParserFunction(rawLine);
-    return parserFunction(rawLine);
-}
-
-function getLineParserFunction(rawLine) {
-    if (rawLine.startsWith('/c:')) {
-        return contextLineParser;
+export class QuoteBlockSpecial {
+    constructor() {
+        this.conversation = new Conversation();
+        this.speech = {};
+        this.context = {};
+        this.fillInSpeech = true;
+        this.myKeypressCallback = this.keypressInput.bind(this);
     }
-    return speechLineParser;
-}
 
-function contextLineParser(rawLine) {
-    return new Line('CONTEXT', rawLine.substring(3));
-}
+    activate() {
+        window.addEventListener('keypress', this.myKeypressCallback, false);
+    }
 
-function speechLineParser(rawLine) {
-    let lineParts = rawLine.split(':',2);
-    let author = lineParts[0];
-    let content = lineParts[1];
-    return new Line('SPEECH', content, author);
-}
+    deactivate() {
+        window.removeEventListener('keypress', this.myKeypressCallback);
+    }
 
-export class QuoteBlock {
+    // This function is called by the aliased method
+    keypressInput(e) {
+        if(e.code === 'KeyB' && e.ctrlKey){
+            this.fillInSpeech = !this.fillInSpeech;
+            if(this.fillInSpeech){
+                this.focusSpeech = true;
+            } else {
+                this.focusContext = true;
+            }
+        }
+    }
+
+    addSpeechLine() {
+        this.conversation.addLine(new Line('SPEECH', this.speech.content, this.speech.author));
+        this.speech.content = '';
+    }
+
+    addContextLine() {
+        this.conversation.addLine(new Line('CONTEXT', this.context.content, this.context.author));
+        this.context.content = '';
+    }
+
     addQoute() {
-        let conversation = new Conversation();
-
-        this.content.split('\n')
-            .map(parseRawLine)
-            .forEach(line => conversation.addLine(line));
-
-        new WebAPI().saveQuote(conversation);
+        new ConversationsRequester().postConversation(this.conversation);
+        this.conversation = new Conversation();
     }
 }
