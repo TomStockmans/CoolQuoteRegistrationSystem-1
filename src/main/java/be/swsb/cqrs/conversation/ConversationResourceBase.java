@@ -6,6 +6,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
+import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -47,6 +48,26 @@ public class ConversationResourceBase implements ConversationResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(conversation).build();
+    }
+
+    @GET
+    @Path("find")
+    @Override
+    public Response find(@QueryParam("participant") String participant, @QueryParam("victim") String victim) {
+        List<Conversation> result = repo.findAll();
+        if(participant != null) {
+            result.removeIf(conversation -> !conversation.getLines().stream()
+                                                                    .flatMap(line -> line.getParticipants().stream())
+                                                                    .anyMatch(p -> p.getName().equalsIgnoreCase(participant)));
+        }
+
+        if(victim != null) {
+            result.removeIf(conversation -> !conversation.getLines().stream()
+                                                                    .flatMap(line -> line.getParticipants().stream())
+                                                                    .anyMatch(p -> p.getName().equalsIgnoreCase(victim) && p.isVictim()));
+        }
+
+        return Response.ok(result).build();
     }
 
     @DELETE

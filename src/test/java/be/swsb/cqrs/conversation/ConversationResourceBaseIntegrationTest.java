@@ -80,6 +80,46 @@ public class ConversationResourceBaseIntegrationTest {
     }
 
     @Test
+    public void findBy_EnkelVictim() {
+        Participant victim = new Participant("Wim", true);
+        Line contextLijn = LineTestBuilder.aContextLine().withParticipants(victim).build();
+        Conversation conversation = aDefaultConversation().withLines(contextLijn).build();
+        repo.save(aDefaultConversation().build());
+        repo.save(conversation);
+        Response wim = conversationResource.find(null, "Wim");
+        List<Conversation> conversations = Stream.of(wim.readEntity(Conversation[].class)).collect(Collectors.toList());
+
+        assertThat(conversations).containsOnly(conversation);
+    }
+
+    @Test
+    public void findBy_EnkelParticipant() {
+        Participant participant = new Participant("Wim", false);
+        Line contextLijn = LineTestBuilder.aContextLine().withParticipants(participant).build();
+        Conversation conversation = aDefaultConversation().withLines(contextLijn).build();
+        repo.save(aDefaultConversation().build());
+        repo.save(conversation);
+        List<Conversation> conversations = Stream.of(conversationResource.find("Wim", null).readEntity(Conversation[].class)).collect(Collectors.toList());
+
+        assertThat(conversations).containsOnly(conversation);
+    }
+
+
+    @Test
+    public void findBy_ParticipantEnVictim() {
+        Participant participant = new Participant("Wim", false);
+        Participant victim = new Participant("Rob", true);
+        Line contextLijn = LineTestBuilder.aContextLine().withParticipants(participant).build();
+        Line speechLijn = LineTestBuilder.aSpeechLine().withParticipants(victim).build();
+        Conversation conversation = aDefaultConversation().withLines(contextLijn, speechLijn).build();
+        repo.save(aDefaultConversation().build());
+        repo.save(conversation);
+        List<Conversation> conversations = Stream.of(conversationResource.find("Wim", "Rob").readEntity(Conversation[].class)).collect(Collectors.toList());
+
+        assertThat(conversations).containsOnly(conversation);
+    }
+
+    @Test
     public void all_WhenConversationsPresent_ReturnsAllConversations() throws Exception {
         Conversation snarf = aDefaultConversation().withPunchLine("Snarf snarf").build();
         Conversation liono = aDefaultConversation().withPunchLine("Thundercats! HOOooooooooo!").build();
