@@ -1,7 +1,12 @@
+import {Participant} from './participant';
+
 export class Line {
-  constructor(type, content, author) {
-    this.type = type.trim();
-    this.content = content.trim();
-    this.author = author ? author.trim() : '';
+  constructor(lineType, text, author) {
+    this.lineType = lineType;
+    this.text = text ? text.trim() : '';
+    this.participants = [];
+    if (author) {
+      this.participants.push(new Participant(author.trim()));
+    } 
   }
 }
