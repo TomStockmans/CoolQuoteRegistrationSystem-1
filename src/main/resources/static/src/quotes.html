@@ -1,5 +1,15 @@
 <template>
-  <div class="text-center">
-    <h2>${message}</h2>
-  </div>
+	<div class="text-center">
+		<h2>Quotes</h2>
+		<ul>
+		<li repeat.for="conversation of response.body">
+			<ul>
+			<li repeat.for="line of conversation.lines">
+				${line.text}
+
+			</li>
+			</ul>
+		</li>
+		</ul>
+	</div>
 </template>

@@ -9,6 +9,10 @@ let quotes = [];
 export class WebAPI {
   saveQuote(quote) {
       quotes.push(quote);
-      console.log(quotes);
+      console.log("quotes");
+  }
+
+  getQuotes() {
+    return quotes;
   }
 }
