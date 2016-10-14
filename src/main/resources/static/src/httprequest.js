@@ -14,11 +14,11 @@ export class HttpRequest {
     }
 
     get(path) {
-        let response = {tekst: "rob"};
+        let response = {};
         this.client.fetch(path)
             .then(response => response.json())
-            .then(data => {
-                response.tekst = data;
+            .then(body => {
+                response.body = body;
             });
         return response;
     }

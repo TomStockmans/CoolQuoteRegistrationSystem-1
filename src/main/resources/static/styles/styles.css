@@ -35,6 +35,20 @@ body {
     background-color: #111;
 }
 
+.context {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.speech {
+  color: #31708f;
+  background-color: #d9edf7;
+}
+
 .splash {
   text-align: center;
   margin: 10% 0 0 0;
@@ -54,6 +68,11 @@ body {
   display: inline-block;
   font-size: 72px;
   margin-top: 50px;
+}
+
+table, th, td {
+   border: 1px solid black;
+   padding: 10px;
 }
 
 .page-host {
