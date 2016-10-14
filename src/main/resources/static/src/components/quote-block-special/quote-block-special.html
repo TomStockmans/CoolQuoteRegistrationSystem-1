@@ -1,4 +1,5 @@
 <template>
+    <require from="../show-conversation/show-conversation.html"></require>
     <div class="container-fluid">
         <h1>Fill in your quotes</h1>
         <div class="row">
@@ -17,16 +18,7 @@
                     <input type="submit" class="btn btn-info" value="Submit your quote">
                 </form>
             </div>
-            <div class="col-md-6">
-                <label>The conversation</label>
-                <ul class="list-group">
-                    <li class="list-group-item ${line.lineType === 'SPEECH'? 'list-group-item-info' : 'list-group-item-warning'}"
-                        repeat.for="line of conversation.lines">
-                        <span class="italic" show.bind="line.lineType === 'SPEECH'" repeat.for="participant of line.participants" id="author">${participant.name}:</span>
-                        <span id="content" show.bind="line.text" >${line.text}</span>
-                    </li>
-                </ul>
-            </div>
+            <show-conversation conversation.bind="conversation"></show-conversation>
         </div>
     </div>
 </template>
