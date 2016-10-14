@@ -30,7 +30,7 @@ public class ConversationTestBuilder {
 
     public static ConversationTestBuilder aDefaultConversation() {
         Line context = aContextLine().withText("context").build();
-        Line punchLine = aSpeechLine().asPunchLine().withText("punch").withParticipants(new Participant("Gianni",false)).build();
+        Line punchLine = aSpeechLine().asPunchLine().withText("punch").withParticipants(new Participant("Gianni")).build();
         return aConversation()
                 .withId(UUID.randomUUID().toString())
                 .withCreatedOn(CREATED_ON)

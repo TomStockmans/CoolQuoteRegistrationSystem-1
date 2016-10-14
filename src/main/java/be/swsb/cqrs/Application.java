@@ -32,17 +32,17 @@ public class Application
 
         Line line1 = new Line();
         line1.setText("firstLine");
-        line1.setParticipants(Arrays.asList(new Participant("Gianni", true)));
+        line1.setParticipants(Arrays.asList(new Participant("Gianni")));
         line1.setLineType(LineType.SPEECH);
 
         Line line2 = new Line();
         line2.setText("secondLine");
-        line2.setParticipants(Arrays.asList(new Participant("Pablo", false)));
+        line2.setParticipants(Arrays.asList(new Participant("Pablo")));
         line2.setLineType(LineType.SPEECH);
 
         Line punchLine = new Line();
         punchLine.setLineType(LineType.SPEECH);
-        punchLine.setParticipants(Arrays.asList(new Participant("Dickbutt", false)));
+        punchLine.setParticipants(Arrays.asList(new Participant("Dickbutt")));
         punchLine.setText("testing...1..2..3..");
         punchLine.setPunchLine(true);
 

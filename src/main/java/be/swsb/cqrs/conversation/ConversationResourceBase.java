@@ -53,18 +53,12 @@ public class ConversationResourceBase implements ConversationResource {
     @GET
     @Path("find")
     @Override
-    public Response find(@QueryParam("participant") String participant, @QueryParam("victim") String victim) {
+    public Response find(@QueryParam("participant") String participant) {
         List<Conversation> result = repo.findAll();
         if(participant != null) {
             result.removeIf(conversation -> !conversation.getLines().stream()
                                                                     .flatMap(line -> line.getParticipants().stream())
                                                                     .anyMatch(p -> p.getName().equalsIgnoreCase(participant)));
-        }
-
-        if(victim != null) {
-            result.removeIf(conversation -> !conversation.getLines().stream()
-                                                                    .flatMap(line -> line.getParticipants().stream())
-                                                                    .anyMatch(p -> p.getName().equalsIgnoreCase(victim) && p.isVictim()));
         }
 
         return Response.ok(result).build();
