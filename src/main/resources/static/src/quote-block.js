@@ -4,8 +4,26 @@ import {Line} from './line';
 
 
 function parseRawLine(rawLine) {
+  let parserFunction = getLineParserFunction(rawLine);
+  return parserFunction(rawLine);
+}
+
+function getLineParserFunction(rawLine) {
+  if (rawLine.startsWith('/c:')) {
+    return contextLineParser;
+  }
+  return speechLineParser;
+}
+
+function contextLineParser(rawLine) {
+  return new Line('CONTEXT', rawLine.substring(3));
+}
+
+function speechLineParser(rawLine) {
   let lineParts = rawLine.split(':',2);
-  return new Line(lineParts[0], lineParts[1]);
+  let author = lineParts[0];
+  let content = lineParts[1];
+  return new Line('SPEECH', content, author);
 }
 
 export class QuoteBlock {

@@ -1,6 +1,7 @@
 export class Line {
-  constructor(author, content) {
-    this.author = author;
-    this.content = content;
+  constructor(type, content, author) {
+    this.type = type.trim();
+    this.content = content.trim();
+    this.author = author ? author.trim() : '';
   }
 }
