@@ -1,6 +1,7 @@
 import {WebAPI} from './web-api';
 import {Conversation} from './conversation';
 import {Line} from './line';
+import {ConversationsRequester} from './conversationsRequester';
 
 
 function parseRawLine(rawLine) {
@@ -33,7 +34,6 @@ export class QuoteBlock {
       this.content.split('\n')
         .map(parseRawLine)
         .forEach(line => conversation.addLine(line));
-
-      new WebAPI().saveQuote(conversation);
+      new ConversationsRequester().postConversation(conversation);
     }
 }
