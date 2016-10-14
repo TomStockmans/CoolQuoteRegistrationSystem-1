@@ -5,7 +5,7 @@ export class App {
   router: Router;
 
   configureRouter(config: RouterConfiguration, router: Router) {
-    config.title = 'Contacts';
+    config.title = 'CQRS - Cool Quote Registration System';
     config.map([
       { route: '', moduleId: 'quotes', title: 'Quotes' },
       { route: 'addQuoteBlock', moduleId: 'quote-block', title: 'Add quote block' },
