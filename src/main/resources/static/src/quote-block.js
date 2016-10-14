@@ -52,4 +52,13 @@ export class QuoteBlock {
         .forEach(line => conversation.addLine(line));
       new ConversationsRequester().postConversation(conversation);
     }
+
+    liveUpdate() {
+      let conversation = new Conversation();
+      this.content.split('\n')
+        .map(parseRawLine)
+        .forEach(line => conversation.addLine(line));
+
+      this.live = conversation;
+    }
 }
