@@ -1,8 +1,11 @@
 import {WebAPI} from './web-api';
+import {Conversation} from './conversation';
 
 export class QuoteBlock {
     addQoute() {
-      new WebAPI().saveQuote(this.content);
+      let conversation = new Conversation();
+      this.content.split('\n').forEach(conversation.addLine.bind(conversation));
+      new WebAPI().saveQuote(conversation);
     }
   
 }
