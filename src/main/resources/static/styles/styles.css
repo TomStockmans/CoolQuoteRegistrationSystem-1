@@ -40,6 +40,10 @@ body {
   background-color: #fcf8e3;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .speech {
   color: #31708f;
   background-color: #d9edf7;

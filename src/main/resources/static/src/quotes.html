@@ -4,7 +4,10 @@
 
 		<div repeat.for="conversation of response.body">
 			<table>
-				<tr repeat.for="line of conversation.lines"><td><span repeat.for="participant of line.participants">${participant.name} </span></td><td>${line.text}</td></tr>
+				<tr repeat.for="line of conversation.lines">
+					<td if.bind="line.lineType !== 'CONTEXT'"><span repeat.for="participant of line.participants">${participant.name} </span></td>
+					<td>${line.text}</td>
+				</tr>
 			</table><br />
 		</div>
 	</div>

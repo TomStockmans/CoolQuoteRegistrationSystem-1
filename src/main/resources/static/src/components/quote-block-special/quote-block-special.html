@@ -3,7 +3,7 @@
         <h1>Fill in your quotes</h1>
         <div class="row">
             <div class="col-md-6">
-                <label>Fill in the quote</label>
+                <span>Fill in the quote</span><em> Press ctr+b to switch between speech and quote</em>
                 <form class="form-group" submit.trigger="addSpeechLine()" show.bind="fillInSpeech">
                     <input type="text" class="form-control speech" focus.bind="focusSpeech" placeholder="author"  value.bind="speech.author">
                     <input type="text" class="form-control speech" placeholder="speech"  value.bind="speech.content">
@@ -23,8 +23,8 @@
                 <ul class="list-group">
                     <li class="list-group-item ${line.type === 'SPEECH'? 'list-group-item-info' : 'list-group-item-warning'}"
                         repeat.for="line of conversation.lines">
-                        <em id="author">${line.author}:</em>
-                        <span id="content">"${line.content}"</span>
+                        <span class="italic" repeat.for="participant of line.participants" id="author">${participant.name}</span>
+                        <span id="content" show.bind="line.text" >"${line.text}"</span>
                     </li>
                 </ul>
             </div>
