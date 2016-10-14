@@ -226,3 +226,10 @@ Tim DM: Misschien moeten we ook gewoon met kak beginnen gooien...
 *Tim DM deelt kleine kaartjes uit met refactoring ideeen*
 Tim DM: Ik heb ook blanko blaadjes afgedrukt
 Rob: Veel werk zeker?
+
+*Tijdens het Aurelia-projectje voor de exploration days*
+Rob: Heeft er iemand al een repeat gedaan?
+Aaron: Wat? Kunt ge da nog is herhalen?
+Rob: Of er iemand al een repeat gedaan heeft.
+Aaron: Ja, ik net.
+*Insert trollface*
