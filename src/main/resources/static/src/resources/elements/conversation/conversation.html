@@ -1,8 +1,8 @@
-<template bindable="quote">
+<template bindable="conversation">
   <require from="./line.html"></require>
 
   <div class="panel panel-default">
-    <dl class="dl-horizontal" repeat.for="line of quote.lines">
+    <dl class="dl-horizontal" repeat.for="line of conversation.lines">
       <line line.bind="line"></line>
     </dl>
   </div>
