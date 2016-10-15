@@ -1,24 +1,12 @@
-import {computedFrom} from "aurelia-framework";
 import {json} from "aurelia-fetch-client";
-import {Logger} from "../util/cqrs-logging";
 
 class Conversation {
-
-  lines = [];
   constructor() {
+    this.lines = [];
   }
 
   addLine(line) {
     this.lines.push(line);
-  }
-
-  // @computedFrom("lines")
-  // get
-  hasLines() {
-    Logger.debug(`this.lines: ${this.lines}`);
-    Logger.debug(`[] == true: ${[] == true}`);
-    Logger.debug(`this.lines == true: ${this.lines == true}`);
-    return this.lines && this.lines.length > 0;
   }
 
   json() {
@@ -44,4 +32,4 @@ class Participant {
   }
 }
 
-export { Conversation, Line, Participant };
+export {Conversation, Line, Participant};
