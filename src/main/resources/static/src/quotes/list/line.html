@@ -1,5 +1,6 @@
-<template>
-  <require from="./participants"></require>
+<template bindable="line">
+  <require from="./participants.html"></require>
+
   <participants participants.bind="line.participants"></participants>
   <dd>${line.text}</dd>
 </template>

@@ -1,4 +1,6 @@
-<template>
+<template bindable="participants">
+
+
   <dt repeat.for="participant of participants">
     <p class="${participant.victim ? 'text-danger' : ''}">${participant.name}</p>
   </dt>

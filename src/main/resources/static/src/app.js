@@ -6,7 +6,7 @@ export class App {
     config.map([
       {
         route: "",
-        moduleId: "quotes/list",
+        moduleId: "quotes/list/list-index",
         nav: true,
         title: "All Quotes",
         name: "home"

@@ -1,0 +1,8 @@
+<template>
+  <require from="./quote-block.html"></require>
+
+  <p if.bind="err" class="text-danger">${err}</p>
+  <div class="container center-block" repeat.for="quote of quotes">
+    <quote-block quote.bind="quote"></quote-block>
+  </div>
+</template>

@@ -1,0 +1,9 @@
+<template bindable="quote">
+  <require from="./line.html"></require>
+
+  <div class="panel panel-default">
+    <dl class="dl-horizontal" repeat.for="line of quote.lines">
+      <line line.bind="line"></line>
+    </dl>
+  </div>
+</template>
