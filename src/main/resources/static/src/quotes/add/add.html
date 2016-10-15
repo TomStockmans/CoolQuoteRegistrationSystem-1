@@ -2,8 +2,10 @@
 
   <div class="container-fluid">
     <div class="row">
+        <em> Press <code>ctrl+b</code> to switch between speech and quote</em>
+    </div>
+    <div class="row">
       <div class="col-md-6">
-        <span>Fill in the quote</span><em> Press <code>ctrl+b</code> to switch between speech and quote</em>
         <form class="form-group" submit.trigger="addSpeechLine()" if.bind="fillInSpeech">
           <input type="text" class="form-control speech" placeholder="author"  value.bind="speech.author">
           <input type="text" class="form-control speech" focus.bind="focusSpeech" placeholder="speech"  value.bind="speech.content">

@@ -48,7 +48,9 @@ export class Add {
   }
 
   addQuote() {
-    this.Quotes.save(this.conversation);
-    this.conversation = new Conversation();
+    this.Quotes.save(this.conversation)
+      .then(savedConvo => {
+        this.conversation = new Conversation();
+      });
   }
 }
