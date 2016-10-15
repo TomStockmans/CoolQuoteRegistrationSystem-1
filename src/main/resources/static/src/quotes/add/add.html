@@ -1,9 +1,24 @@
 <template>
-  <form submit.trigger="add()" class="panel panel-default">
-    <div class="panel-group">
-      <input type="text" id="participants" value.bind="participant" />
-      <input type="text" id="text" value.bind="content" />
+  <require from="./show-conversation.html"></require>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <span>Fill in the quote</span><em> Press <code>ctrl+b</code> to switch between speech and quote</em>
+        <form class="form-group" submit.trigger="addSpeechLine()" if.bind="fillInSpeech">
+          <input type="text" class="form-control speech" placeholder="author"  value.bind="speech.author">
+          <input type="text" class="form-control speech" focus.bind="focusSpeech" placeholder="speech"  value.bind="speech.content">
+          <input type="submit" class="hidden">
+        </form>
+        <form class="form-group" submit.trigger="addContextLine()" if.bind="!fillInSpeech">
+          <input type="text" class="form-control context" focus.bind="focusContext" placeholder="context"  value.bind="context.content">
+          <input type="submit" class="hidden">
+        </form>
+        <form class="form-group" submit.trigger="addQuote()">
+          <input type="submit" class="btn btn-info" value="Submit your quote">
+        </form>
+      </div>
+      <show-conversation conversation.bind="conversation"></show-conversation>
     </div>
-    <button type="submit">Submit</button>
-  </form>
+  </div>
 </template>
