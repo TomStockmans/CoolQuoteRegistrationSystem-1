@@ -8,10 +8,6 @@ class Conversation {
   addLine(line) {
     this.lines.push(line);
   }
-  
-  hasLines() {
-    return this.lines && this.lines.size > 0;
-  }
 
   json() {
     return json(this);
@@ -36,4 +32,4 @@ class Participant {
   }
 }
 
-export { Conversation, Line, Participant };
+export {Conversation, Line, Participant};
