@@ -13,7 +13,7 @@ export class App {
       },
       {
         route: "quotes/add",
-        moduleId: "quotes/add/add",
+        moduleId: "quotes/add/continuous-add",
         nav: true,
         title: "Add new Quote"
       },

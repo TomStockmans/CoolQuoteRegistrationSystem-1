@@ -4,3 +4,9 @@ conversation p {
 conversation dl {
   margin: 0px;
 }
+editable-conversation p {
+  margin: 0px;
+}
+editable-conversation dl {
+  margin: 0px;
+}

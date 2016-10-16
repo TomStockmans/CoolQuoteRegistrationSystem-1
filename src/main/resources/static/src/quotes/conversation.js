@@ -18,17 +18,14 @@ class Line {
   constructor(lineType, text, author, punchLine) {
     this.lineType = lineType;
     this.text = text ? text.trim() : '';
-    this.participants = [];
+    this.participants = author ? [new Participant(author)] : [];
     this.punchLine = punchLine;
-    if (author) {
-      this.participants.push(new Participant(author.trim()));
-    }
   }
 }
 
 class Participant {
   constructor(name) {
-    this.name = name;
+    this.name = name ? name.trim() : '';
   }
 }
 
