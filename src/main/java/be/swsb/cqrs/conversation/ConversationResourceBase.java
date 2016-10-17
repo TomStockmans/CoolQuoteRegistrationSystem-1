@@ -1,5 +1,7 @@
 package be.swsb.cqrs.conversation;
 
+import org.springframework.data.domain.Sort;
+
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -23,7 +25,7 @@ public class ConversationResourceBase implements ConversationResource {
     @Override
     @GET
     public Response all() {
-        return Response.ok(repo.findAll()).build();
+        return Response.ok(repo.findAll(new Sort(Sort.Direction.DESC, "createdOn"))).build();
     }
 
     @POST

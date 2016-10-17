@@ -40,7 +40,7 @@ public class Conversation {
                         @JsonProperty("conversationDate") LocalDate conversationDate
                         ) {
         this.id = id;
-        this.createdOn = createdOn;
+        this.createdOn = createdOn == null ? LocalDateTime.now() : createdOn;
         this.conversationDate = conversationDate;
         this.lines = lines;
     }
