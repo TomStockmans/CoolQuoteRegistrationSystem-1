@@ -2,7 +2,7 @@
 
   <div class="panel panel-default">
     <dl class="dl-horizontal" id="lines" repeat.for="line of lines">
-      <dt contenteditable="true" focus.bind="line.hasFocus" textcontent.bind="line.author"></dt>
+      <dt contenteditable="true" focus.bind="line.hasFocus" textcontent.bind="line.author" keypress.trigger="blockEnter($event)"></dt>
       <dd contenteditable="true" textcontent.bind="line.text" keypress.trigger="next($event)"></dd>
     </dl>
   </div>

@@ -1,6 +1,7 @@
 import {bindable, inject} from "aurelia-framework";
 import {Line} from "../conversation";
 import {Hotkeys} from "../../hotkeys";
+import {Logger} from "../../util/cqrs-logging";
 
 @inject(Hotkeys)
 export class EditableConversation {
@@ -37,9 +38,11 @@ export class EditableConversation {
   }
 
   focusNextLine() {
-    this.editingLine.hasFocus = false;
     this.editingLine = {author: 'author', text: 'text', hasFocus: true};
     this.lines.push(this.editingLine);
   }
 
+  blockEnter(event) {
+    return event.key !== 'Enter';
+  }
 }
