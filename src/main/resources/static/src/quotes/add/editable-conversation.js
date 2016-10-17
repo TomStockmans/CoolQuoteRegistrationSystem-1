@@ -1,5 +1,4 @@
 import {bindable, inject} from "aurelia-framework";
-import {Logger} from "../../util/cqrs-logging";
 import {Line} from "../conversation";
 import {Hotkeys} from "../../hotkeys";
 
@@ -14,29 +13,32 @@ export class EditableConversation {
   }
 
   init() {
-    this.editingLine = {author:'author',text:'text',hasFocus:true};
+    this.editingLine = {author: 'author', text: 'text', hasFocus: true};
     this.lines = [this.editingLine];
   }
-  
+
   next(event) {
-    Logger.debug(`next() executed - `, event);
     if (this.Hotkeys.submitQuoteKeyPressed(event)) {
-      this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
+      this.addSpeechLine();
       this.save();
       this.init();
       return false;
     }
     if (this.Hotkeys.nextLineKeyPressed(event)) {
-      this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
+      this.addSpeechLine();
       this.focusNextLine();
       return false;
     }
     return true;
   }
 
+  addSpeechLine() {
+    this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
+  }
+
   focusNextLine() {
     this.editingLine.hasFocus = false;
-    this.editingLine = {author:'author',text:'text',hasFocus:true};
+    this.editingLine = {author: 'author', text: 'text', hasFocus: true};
     this.lines.push(this.editingLine);
   }
 
