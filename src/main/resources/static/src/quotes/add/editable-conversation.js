@@ -1,12 +1,15 @@
-import {bindable} from "aurelia-framework";
+import {bindable, inject} from "aurelia-framework";
 import {Logger} from "../../util/cqrs-logging";
 import {Line} from "../conversation";
+import {Hotkeys} from "../../hotkeys";
 
+@inject(Hotkeys)
 export class EditableConversation {
   @bindable conversation;
   @bindable save;
 
-  constructor() {
+  constructor(Hotkeys) {
+    this.Hotkeys = Hotkeys;
     this.init();
   }
 
@@ -17,13 +20,13 @@ export class EditableConversation {
   
   next(event) {
     Logger.debug(`next() executed - `, event);
-    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+    if (this.Hotkeys.submitQuoteKeyPressed(event)) {
       this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
       this.save();
       this.init();
       return false;
     }
-    if (event.key === 'Enter') {
+    if (this.Hotkeys.nextLineKeyPressed(event)) {
       this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
       this.focusNextLine();
       return false;
