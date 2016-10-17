@@ -14,8 +14,8 @@ export class EditableConversation {
   }
 
   init() {
-    this.editingLine = {author: 'author', text: 'text', hasFocus: true};
-    this.lines = [this.editingLine];
+    this.lines = [];
+    this.focusNextLine();
   }
 
   next(event) {
@@ -38,7 +38,7 @@ export class EditableConversation {
   }
 
   focusNextLine() {
-    this.editingLine = {author: 'author', text: 'text', hasFocus: true};
+    this.editingLine = {author: '', text: '', hasFocus: true};
     this.lines.push(this.editingLine);
   }
 

@@ -10,3 +10,9 @@ editable-conversation p {
 editable-conversation dl {
   margin: 0px;
 }
+
+/* Give contenteditable's placeholders */
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+}
