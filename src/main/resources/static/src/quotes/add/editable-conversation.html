@@ -1,9 +1,26 @@
 <template>
 
+  <div if.bind="validationErrors.length" class="panel panel-danger">
+    <p></p>
+  </div>
   <div class="panel panel-default">
-    <dl class="dl-horizontal" id="lines" repeat.for="line of lines">
-      <dt contenteditable="true" placeholder="author" focus.bind="line.hasFocus" textcontent.bind="line.author" keypress.trigger="blockEnter($event)"></dt>
-      <dd contenteditable="true" placeholder="text" textcontent.bind="line.text" keypress.trigger="next($event)"></dd>
+    <dl
+      id="lines"
+      repeat.for="line of lines"
+      validation-errors.bind="lineErrors"
+      class="dl-horizontal">
+      <dt contenteditable="true"
+          validation-errors.bind="authorErrors"
+          placeholder="author"
+          textcontent.bind="line.author & validateManually"
+          keypress.trigger="blockEnter($event)"
+          focus.bind="line.hasFocus"></dt>
+      <dd contenteditable="true"
+          validation-errors.bind="textErrors"
+          class.bind="textErrors.length ? 'has-error' : ''"
+          placeholder="text"
+          textcontent.bind="line.text & validateManually"
+          keypress.trigger="next($event)"></dd>
     </dl>
   </div>
 </template>
