@@ -1,26 +1,26 @@
 <template>
 
   <div if.bind="validationErrors.length" class="panel panel-danger">
-    <p></p>
+    <p>${validationErrors}</p>
   </div>
   <div class="panel panel-default">
     <dl
       id="lines"
       repeat.for="line of lines"
       validation-errors.bind="lineErrors"
-      class="dl-horizontal">
+      class="dl-horizontal text-danger">
       <dt contenteditable="true"
           validation-errors.bind="authorErrors"
           placeholder="author"
           textcontent.bind="line.author & validateManually"
-          keypress.trigger="blockEnter($event)"
+          keydown.trigger="blockEnter($event)"
           focus.bind="line.hasFocus"></dt>
       <dd contenteditable="true"
           validation-errors.bind="textErrors"
           class.bind="textErrors.length ? 'has-error' : ''"
           placeholder="text"
           textcontent.bind="line.text & validateManually"
-          keypress.trigger="next($event)"></dd>
+          keydown.trigger="next($event)"></dd>
     </dl>
   </div>
 </template>

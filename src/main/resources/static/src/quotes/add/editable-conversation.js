@@ -18,21 +18,30 @@ export class EditableConversation {
     this.validation = ValidationControllerFactory.createForCurrentScope();
     // this.validation.validateTrigger = validateTrigger.manual;
     this.init();
-    this.validation.addObject(
-      this.editingLine,
-      ValidationRules
+
+    ValidationRules
       .ensure(l => l.author).required()
       .ensure(l => l.text).required()
-      .rules);
+      .on(this.editingLine);
   }
 
   init() {
     this.lines = [];
     this.focusNextLine();
   }
+
+  validates() {
+    this.validation.validate()
+      .then(errors => this.validationErrors = errors)
+      .catch(err => Logger.error('something terrible has happened', err));
+    return !this.validationErrors.length;
+  }
+  
   addSpeechLine() {
-    this.validation.validate();
-    this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
+    if (this.validates()) {
+      this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
+      this.focusNextLine();
+    }
   }
 
   focusNextLine() {
@@ -50,7 +59,6 @@ export class EditableConversation {
     }
     if (this.hotkeys.nextLineKeyPressed(event)) {
       this.addSpeechLine();
-      this.focusNextLine();
       return false;
     }
     return true;
