@@ -5,7 +5,7 @@ import {Logger} from "../../util/cqrs-logging";
 import {ValidationRules, ValidationControllerFactory, validateTrigger} from "aurelia-validation";
 
 @inject(Hotkeys, ValidationControllerFactory)
-export class EditableConversation {
+class EditableConversation {
   @bindable conversation;
   @bindable save;
   hotkeys;
@@ -18,11 +18,10 @@ export class EditableConversation {
     this.validation = ValidationControllerFactory.createForCurrentScope();
     // this.validation.validateTrigger = validateTrigger.manual;
     this.init();
-
     ValidationRules
       .ensure(l => l.author).required()
       .ensure(l => l.text).required()
-      .on(this.editingLine);
+      .on(EditableLine);
   }
 
   init() {
@@ -45,7 +44,7 @@ export class EditableConversation {
   }
 
   focusNextLine() {
-    this.editingLine = {author: '', text: '', hasFocus: true};
+    this.editingLine = new EditableLine();
     this.lines.push(this.editingLine);
   }
 
@@ -61,6 +60,10 @@ export class EditableConversation {
       this.addSpeechLine();
       return false;
     }
+    if (this.validationErrors.length) {
+      this.validation.reset();
+      this.validationErrors = [];
+    }
     return true;
   }
 
@@ -68,3 +71,11 @@ export class EditableConversation {
     return event.key !== 'Enter';
   }
 }
+
+class EditableLine {
+  author = '';
+  text = '';
+  hasFocus = true;
+}
+
+export { EditableConversation }
