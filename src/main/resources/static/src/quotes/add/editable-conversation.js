@@ -50,7 +50,7 @@ class EditableConversation {
   }
 
   /** key event handlers **/
-  next(event) {
+  handle(event) {
     if (this.hotkeys.submitQuoteKeyPressed(event)) {
       this.doAfterValidation(() => {
         this.addSpeechLine();
