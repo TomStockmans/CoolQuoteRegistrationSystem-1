@@ -16,7 +16,6 @@ class EditableConversation {
   constructor(Hotkeys, ValidationControllerFactory) {
     this.hotkeys = Hotkeys;
     this.validation = ValidationControllerFactory.createForCurrentScope();
-    // this.validation.validateTrigger = validateTrigger.manual;
     this.init();
     ValidationRules
       .ensure(l => l.author).required()
@@ -29,18 +28,20 @@ class EditableConversation {
     this.focusNextLine();
   }
 
-  validates() {
+  doAfterValidation(success) {
     this.validation.validate()
-      .then(errors => this.validationErrors = errors)
+      .then(errors => {
+        this.validationErrors = errors;
+        if (this.validationErrors.length == 0) {
+          success();
+        }
+      })
       .catch(err => Logger.error('something terrible has happened', err));
-    return !this.validationErrors.length;
   }
-  
+
   addSpeechLine() {
-    if (this.validates()) {
-      this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
-      this.focusNextLine();
-    }
+    this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
+    this.focusNextLine();
   }
 
   focusNextLine() {
@@ -51,16 +52,20 @@ class EditableConversation {
   /** key event handlers **/
   next(event) {
     if (this.hotkeys.submitQuoteKeyPressed(event)) {
-      this.addSpeechLine();
-      this.save();
-      this.init();
+      this.doAfterValidation(() => {
+        this.addSpeechLine();
+        this.save();
+        this.init();
+      });
       return false;
     }
     if (this.hotkeys.nextLineKeyPressed(event)) {
-      this.addSpeechLine();
+      this.doAfterValidation(() => {
+        this.addSpeechLine();
+      });
       return false;
     }
-    if (this.validationErrors.length) {
+    if (this.validationErrors && this.validationErrors.length) {
       this.validation.reset();
       this.validationErrors = [];
     }
