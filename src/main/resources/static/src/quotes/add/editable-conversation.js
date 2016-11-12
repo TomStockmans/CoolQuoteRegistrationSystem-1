@@ -44,6 +44,14 @@ class EditableConversation {
     this.focusNextLine();
   }
 
+  removeSpeechLine() {
+    if (this.lines.length == 1) {
+      return;
+    }
+    this.lines.pop();
+    this.lines[this.lines.length - 1].hasFocus = true;
+  }
+
   focusNextLine() {
     this.editingLine = new EditableLine();
     this.lines.push(this.editingLine);
@@ -63,6 +71,10 @@ class EditableConversation {
       this.doAfterValidation(() => {
         this.addSpeechLine();
       });
+      return false;
+    }
+    if (this.hotkeys.deleteLineKeyPressed(event)) {
+      this.removeSpeechLine();
       return false;
     }
     if (this.validationErrors && this.validationErrors.length) {
