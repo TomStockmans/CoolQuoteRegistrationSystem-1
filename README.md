@@ -75,6 +75,48 @@ Next, from the static dir, run the app via the CLI:
 au run
 ```
 
+### Funky stuff
+#### Notifications with aurelia-notification and humane.js
+We're using [aurelia-notification](https://github.com/SpoonX/aurelia-notification), a non-official plugin for Aurelia which wraps [humane.js](http://wavded.github.io/humane-js/) to provide notifications that automatically disappear.
+
+This required us to add a dependency on [aurelia-18n](https://github.com/aurelia/i18n), which required a dependency on `i18next` and `i18n-xhr-backend`.
+
+There's stuff configured in `main.js` for both i18n and notifications.
+
+Whenever you want to change the humanejs theme, you'll have to modify
+
+```
+main.js:
+
+  .plugin('aurelia-notification', config => {
+    ...
+        notifications: {
+          'success': 'humane-jackedup-success',
+          'error': 'humane-jackedup-error',
+          'info': 'humane-jackedup-info'
+        }
+    ...
+```
+
+```
+index.html:
+
+<link rel="stylesheet" href="node_modules/humane-js/themes/jackedup.css">
+
+```
+
+```
+aurelia.json:
+
+{
+    "name": "humane-js",
+    "path": "../node_modules/humane-js",
+    "main": "humane",
+    "resources": [
+      "themes/jackedup.css"
+    ]
+}
+```
 ## IntegrationTest magic
 ### Overriding application.properties
 Other than [src/main/resources/application.properties](src/main/resources/application.properties), there's a [src/test/resources/application.properties](src/test/resources/application.properties) which overriding the main one at test runtime.

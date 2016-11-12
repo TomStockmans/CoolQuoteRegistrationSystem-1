@@ -21,6 +21,6 @@ export class ContinuousAdd {
   }
 
   showQuoteSaved() {
-    this.Notification.success('Quote Saved');
+    this.Notification.info('Quote saved!');
   }
 }

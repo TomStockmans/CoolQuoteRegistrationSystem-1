@@ -163,7 +163,7 @@
             "path": "../node_modules/humane-js",
             "main": "humane",
             "resources": [
-              "themes/flatty.css"
+              "themes/jackedup.css"
             ]
           },
           {

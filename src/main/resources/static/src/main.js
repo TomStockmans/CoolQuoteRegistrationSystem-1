@@ -35,11 +35,11 @@ export function configure(aurelia) {
     })
     .plugin('aurelia-notification', config => {
       config.configure({
-        translate: false,  // 'true' needs aurelia-i18n to be configured
+        translate: true,  // 'true' needs aurelia-i18n to be configured
         notifications: {
-          'success': 'humane-original-success',
-          'error': 'humane-original-error',
-          'info': 'humane-original-info'
+          'success': 'humane-jackedup-success',
+          'error': 'humane-jackedup-error',
+          'info': 'humane-jackedup-info'
         }
       })
     })
