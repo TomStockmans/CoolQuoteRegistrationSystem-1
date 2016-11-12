@@ -1,5 +1,13 @@
 <template>
   <require from="./editable-conversation"></require>
-
-  <editable-conversation conversation.two-way="conversation" save.call="save()"></editable-conversation>
+  <div class="col-md-10 col-lg-offset-1">
+    <editable-conversation conversation.two-way="conversation" save.call="save()"></editable-conversation>
+  </div>
+  <div class="col-md-3 col-md-offset-4 panel">
+    <div class="panel-body">
+      <p><kbd>Enter</kbd> adds a new line</p>
+      <p><kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Enter</kbd> submits your quote</p>
+      <p>(<kbd>Shift</kbd>+)<kbd>Tab</kbd> navigates between fields</p>
+    </div>
+  </div>
 </template>
