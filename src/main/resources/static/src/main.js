@@ -1,6 +1,8 @@
 import environment from './environment';
 import 'whatwg-fetch';
 import {HttpClient} from 'aurelia-fetch-client';
+import {I18N} from 'aurelia-i18n'; 
+import Backend from 'i18next-xhr-backend';
 
 //Configure Bluebird Promises.
 //Note: You may want to use environment-specific configuration.
@@ -10,11 +12,37 @@ Promise.config({
   }
 });
 
-
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .plugin('aurelia-validation')
+    .plugin('aurelia-i18n', (instance) => {
+      // register backend plugin
+      instance.i18next.use(Backend);
+
+      // adapt options to your needs (see http://i18next.com/docs/options/)
+      // make sure to return the promise of the setup method, in order to guarantee proper loading
+      return instance.setup({
+        backend: {                                   // <-- configure backend settings
+          loadPath: './locales/{{lng}}/{{ns}}.json' // <-- XHR settings for where to get the files from
+        },
+        lng : 'en',
+        defaultNS: 'translation',
+        attributes : ['t','i18n'],
+        fallbackLng : 'en',
+        debug : false
+      });
+    })
+    .plugin('aurelia-notification', config => {
+      config.configure({
+        translate: false,  // 'true' needs aurelia-i18n to be configured
+        notifications: {
+          'success': 'humane-original-success',
+          'error': 'humane-original-error',
+          'info': 'humane-original-info'
+        }
+      })
+    })
     .feature('resources');
 
   if (environment.debug) {
