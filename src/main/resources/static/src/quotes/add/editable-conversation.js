@@ -25,7 +25,7 @@ class EditableConversation {
 
   init() {
     this.lines = [];
-    this.focusNextLine();
+    this.addLine();
   }
 
   doAfterValidation(success) {
@@ -39,12 +39,13 @@ class EditableConversation {
       .catch(err => Logger.error('something terrible has happened', err));
   }
 
-  addSpeechLine() {
-    this.conversation.addLine(new Line("SPEECH", this.editingLine.text, this.editingLine.author, false));
-    this.focusNextLine();
+  addLinesToConversation() {
+    for (let line of this.lines) {
+      this.conversation.addLine(new Line(line.type, line.text, line.author, false));
+    }
   }
 
-  removeSpeechLine() {
+  removeLine() {
     if (this.lines.length == 1) {
       return;
     }
@@ -52,7 +53,7 @@ class EditableConversation {
     this.lines[this.lines.length - 1].hasFocus = true;
   }
 
-  focusNextLine() {
+  addLine() {
     this.editingLine = new EditableLine();
     this.lines.push(this.editingLine);
   }
@@ -61,7 +62,7 @@ class EditableConversation {
   handle(event) {
     if (this.hotkeys.submitQuoteKeyPressed(event)) {
       this.doAfterValidation(() => {
-        this.addSpeechLine();
+        this.addLinesToConversation();
         this.save();
         this.init();
       });
@@ -69,12 +70,12 @@ class EditableConversation {
     }
     if (this.hotkeys.nextLineKeyPressed(event)) {
       this.doAfterValidation(() => {
-        this.addSpeechLine();
+        this.addLine();
       });
       return false;
     }
     if (this.hotkeys.deleteLineKeyPressed(event)) {
-      this.removeSpeechLine();
+      this.removeLine();
       return false;
     }
     if (this.validationErrors && this.validationErrors.length) {
@@ -83,13 +84,10 @@ class EditableConversation {
     }
     return true;
   }
-
-  blockEnter(event) {
-    return event.key !== 'Enter';
-  }
 }
 
 class EditableLine {
+  type = 'SPEECH';
   author = '';
   text = '';
   hasFocus = true;
