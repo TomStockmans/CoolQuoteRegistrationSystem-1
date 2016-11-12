@@ -2,7 +2,8 @@
   <require from="./line.html"></require>
 
   <div if.bind="conversation.lines.length > 0" class="panel panel-default">
-    <dl class="dl-horizontal" repeat.for="line of conversation.lines">
+    <dl repeat.for="line of conversation.lines"
+        class.bind="line.lineType == 'CONTEXT' ? 'dl-horizontal text-warning' : 'dl-horizontal'">
       <line line.bind="line"></line>
     </dl>
   </div>

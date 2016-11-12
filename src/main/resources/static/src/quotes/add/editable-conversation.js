@@ -50,7 +50,8 @@ class EditableConversation {
       return;
     }
     this.lines.pop();
-    this.lines[this.lines.length - 1].hasFocus = true;
+    this.editingLine = this.lines[this.lines.length - 1];
+    this.editingLine.hasFocus = true;
   }
 
   addLine() {
@@ -78,11 +79,29 @@ class EditableConversation {
       this.removeLine();
       return false;
     }
+    if (this.hotkeys.toggleContextKeyPressed(event)) {
+      this.toggleContext();
+      return false;
+    }
     if (this.validationErrors && this.validationErrors.length) {
       this.validation.reset();
       this.validationErrors = [];
     }
     return true;
+  }
+
+  toggleContext() {
+    if (this.editingLine.type == 'SPEECH') {
+      this.editingLine.type = 'CONTEXT';
+      this.editingLine.author = 'Context';
+      this.editingLine.textHasFocus = true;
+      this.editingLine.hasFocus = false;
+    } else if (this.editingLine.type == 'CONTEXT') {
+      this.editingLine.type = 'SPEECH';
+      this.editingLine.author = '';
+      this.editingLine.textHasFocus = false;
+      this.editingLine.hasFocus = true;
+    }
   }
 }
 
@@ -91,6 +110,7 @@ class EditableLine {
   author = '';
   text = '';
   hasFocus = true;
+  textHasFocus = false;
 }
 
 export { EditableConversation }
