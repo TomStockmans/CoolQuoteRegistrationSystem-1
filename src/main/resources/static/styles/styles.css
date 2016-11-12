@@ -12,9 +12,10 @@ editable-conversation dl {
 }
 
 /* Give contenteditable's placeholders */
-[contenteditable=true]:empty:before{
+[contenteditable=true]:empty:before {
   content: attr(placeholder);
   display: block; /* For Firefox */
+  opacity: 0.7;
 }
 
 kbd {
