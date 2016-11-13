@@ -12,20 +12,23 @@ repositories {
     mavenCentral()
 }
 
+
 buildscript {
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+        def springBootVersion = "1.4.1.RELEASE"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
     }
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-jersey:1.4.1.RELEASE") //jax-rs instead of spring-mvc
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.4.1.RELEASE") //so we can serve static content from src/main/resources/static/
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb:1.4.1.RELEASE")
+    def springBootVersion = "1.4.1.RELEASE"
+    compile("org.springframework.boot:spring-boot-starter-jersey:$springBootVersion") //jax-rs instead of spring-mvc
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion") //so we can serve static content from src/main/resources/static/
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion")
 
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.3") //to be able to deserialize LocalDateTimes etc.
 
@@ -33,7 +36,7 @@ dependencies {
     testCompile("junit:junit:4.12")
     testCompile("org.assertj:assertj-core:3.2.0")
     testCompile("org.mockito:mockito-core:2.0.31-beta")
-    testCompile("org.springframework.boot:spring-boot-starter-test:1.4.1.RELEASE")
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testCompile("org.glassfish.jersey.core:jersey-client:2.23.2")
     testCompile("org.glassfish.jersey.ext:jersey-proxy-client:2.23.2")
 }
