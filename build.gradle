@@ -2,28 +2,33 @@ group 'be.swsb'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'spring-boot'
 apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'com.moowork.node'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
 
 
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//        }
     }
 
     dependencies {
         def springBootVersion = "1.4.1.RELEASE"
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+        classpath "com.moowork.gradle:gradle-node-plugin:0.13"
     }
 }
 
+repositories {
+    mavenCentral()
+}
 dependencies {
     def springBootVersion = "1.4.1.RELEASE"
     compile("org.springframework.boot:spring-boot-starter-jersey:$springBootVersion") //jax-rs instead of spring-mvc
@@ -32,11 +37,26 @@ dependencies {
 
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.3") //to be able to deserialize LocalDateTimes etc.
 
-
     testCompile("junit:junit:4.12")
     testCompile("org.assertj:assertj-core:3.2.0")
     testCompile("org.mockito:mockito-core:2.0.31-beta")
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testCompile("org.glassfish.jersey.core:jersey-client:2.23.2")
     testCompile("org.glassfish.jersey.ext:jersey-proxy-client:2.23.2")
+}
+
+task setupAurelia(type: NpmTask) {
+    workingDir = file('./src/ui')
+    args = ['run', 'setup']
+}
+
+task buildDist(type: NpmTask) {
+    workingDir = file('./src/ui')
+    args = ['run', 'dist']
+}
+
+task stage(type: Copy) {
+    from 'src/ui/'
+    include 'scripts/vendor-bundle.js', 'index.html'
+    into 'src/main/resources/static'
 }
