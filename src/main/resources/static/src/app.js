@@ -16,12 +16,6 @@ export class App {
         moduleId: "quotes/add/continuous-add",
         nav: true,
         title: "Add new Quote"
-      },
-      {
-        route: "about",
-        moduleId: "about/about",
-        nav: true,
-        title: "About"
       }
     ]);
   }
