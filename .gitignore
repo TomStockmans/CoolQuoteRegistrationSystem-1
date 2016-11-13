@@ -138,6 +138,6 @@ gradle-app.setting
 .DS_Store
 
 ## Aurelia generated during development
-src/main/resources/static/scripts/app-bundle.js
-src/main/resources/static/scripts/app-bundle.js.map
-src/main/resources/static/scripts/vendor-bundle.js
+src/ui/scripts/app-bundle.js
+src/ui/scripts/app-bundle.js.map
+src/ui/scripts/vendor-bundle.js
