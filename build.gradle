@@ -57,6 +57,10 @@ task buildDist(type: NpmTask) {
 
 task stage(type: Copy) {
     from 'src/ui/'
-    include 'scripts/vendor-bundle.js', 'index.html'
+    include 'scripts/vendor-bundle.js',
+            'scripts/app-bundle.js',
+            'locales/**/*.json',
+            'index.html',
+            'favicon.ico'
     into 'src/main/resources/static'
 }
