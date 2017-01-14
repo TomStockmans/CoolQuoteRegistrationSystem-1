@@ -29,6 +29,7 @@ buildscript {
 repositories {
     mavenCentral()
 }
+
 dependencies {
     def springBootVersion = "1.4.1.RELEASE"
     compile("org.springframework.boot:spring-boot-starter-jersey:$springBootVersion") //jax-rs instead of spring-mvc
@@ -55,7 +56,7 @@ task buildDist(type: NpmTask) {
     args = ['run', 'dist']
 }
 
-task stage(type: Copy) {
+task stageUI(type: Copy) {
     from 'src/ui/'
     include 'scripts/vendor-bundle.js',
             'scripts/app-bundle.js',
@@ -64,3 +65,7 @@ task stage(type: Copy) {
             'favicon.ico'
     into 'src/main/resources/static'
 }
+
+// will be used by default by Heroku Gradle plugin
+task stage(dependsOn: ['build', 'clean', 'stageUI', 'buildDist'])
+build.mustRunAfter clean
