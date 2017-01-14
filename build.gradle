@@ -67,5 +67,5 @@ task stageUI(type: Copy) {
 }
 
 // will be used by default by Heroku Gradle plugin
-task stage(dependsOn: ['build', 'clean', 'stageUI', 'buildDist'])
+task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
