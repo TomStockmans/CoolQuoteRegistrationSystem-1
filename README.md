@@ -129,3 +129,17 @@ This is why we simply use the `Application` and `JerseyConfig` configuration cla
 We're calling our _Resource_ with the `jersey-proxy-client` framework.
 
 This is why we're not `@Autowiring` our own _Resource_, but instead using a `WebResourceFactory` to proxy our _Resource_, and do all the actual http calls, marshalling and error handling via `jersey-client`.
+
+
+## Deploying to Heroku
+[Deploying using Gradle](https://devcenter.heroku.com/articles/deploying-gradle-apps-on-heroku)
+
+[Deploying using a Docker Container](https://devcenter.heroku.com/articles/container-registry-and-runtime)
+
+### Stuff to do to be able to deploy our app as a docker container on Heroku
+
+* create a dockerhub registry
+* have travis build and push an image to the registry
+* configure heroku with the `latest` tag of the dockerhub image
+* configure heroku to _deploy after successful travis build_
+* and I guess also fix our Aurelia app to use a proper _baseUrl_ or something :smile:
