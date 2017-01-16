@@ -141,23 +141,8 @@
             "main": "aurelia-testing",
             "env": "dev"
           },
-          {
-            "name": "i18next",
-            "path": "../node_modules/i18next/dist/umd",
-            "main": "i18next"
-          },
-          {
-            "name": "aurelia-i18n",
-            "path": "../node_modules/aurelia-i18n/dist/amd",
-            "main": "aurelia-i18n"
-          },
-          {
-            "name": "i18next-xhr-backend",
-            "path": "../node_modules/i18next-xhr-backend/dist/umd",
-            "main": "i18nextXHRBackend"
-          },
-          "extend",
           "aurelia-notification",
+          "extend",
           {
             "name": "humane-js",
             "path": "../node_modules/humane-js",
@@ -165,6 +150,21 @@
             "resources": [
               "themes/jackedup.css"
             ]
+          },
+          {
+            "name": "aurelia-i18n",
+            "path": "../node_modules/aurelia-i18n/dist/commonjs",
+            "main": "index"
+          },
+          {
+          "name": "i18next",
+          "path": "../node_modules/i18next/dist/commonjs",
+          "main": "index"
+          },
+          {
+          "name": "i18next-xhr-backend",
+          "path": "../node_modules/i18next-xhr-backend/dist/commonjs",
+          "main": "index"
           },
           {
             "name": "whatwg-fetch",

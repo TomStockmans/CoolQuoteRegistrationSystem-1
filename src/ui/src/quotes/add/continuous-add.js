@@ -1,7 +1,7 @@
 import {inject} from "aurelia-framework";
 import {Quotes} from "../quotes";
 import {Conversation} from "../conversation";
-import {Notification} from 'aurelia-notification';
+import {Notification} from "aurelia-notification";
 import {Logger} from "../../util/cqrs-logging";
 
 @inject(Quotes, Notification)
