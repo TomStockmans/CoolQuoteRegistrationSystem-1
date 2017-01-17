@@ -10,14 +10,14 @@ before_install:
 
 before_script:
 #  - cd src/ui && npm install
-  - docker run -d -p 127.0.0.1:27017:27017 mongo
+  - docker run -d --name mongotest -p 27017:27017 mongo
   - docker ps -a
 
 install:
   - cd src/ui && npm install && cd ../..
 
 script:
-  - ./gradlew buildDist stageUI build
+  - ./gradlew buildDist stageUI build --debug
 
 # as stated in https://docs.travis-ci.com/user/languages/java/#Caching
 before_cache:
@@ -29,4 +29,5 @@ cache:
     - $HOME/.gradle/wrapper/
 
 after_script:
+  - docker rm -f mongotest
   - ls -lah .
