@@ -5,13 +5,19 @@ language: java
 services:
   - docker
 
+before_install:
+  - node_js install node
+
 before_script:
 #  - cd src/ui && npm install
   - docker run -d -p 0.0.0.0:27017:27017 mongo
   - docker ps -a
 
+install:
+  - cd src/ui && npm install
+
 script:
-  - ./gradlew npmInstall buildDist stageUI build
+  - ./gradlew buildDist stageUI build
 
 # as stated in https://docs.travis-ci.com/user/languages/java/#Caching
 before_cache:
