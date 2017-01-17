@@ -25,6 +25,10 @@ public class Application
 
     @Override
     public void run(String... args) throws Exception {
+//        initDummyStuff();
+    }
+
+    private void initDummyStuff() {
         repo.deleteAll();
         Line line0 = new Line();
         line0.setText("contextLine");
