@@ -11,7 +11,7 @@ before_script:
   - docker ps -a
 
 script:
-  - ./gradlew buildDist stageUI build
+  - ./gradlew npmInstall buildDist stageUI build
 
 # as stated in https://docs.travis-ci.com/user/languages/java/#Caching
 before_cache:
