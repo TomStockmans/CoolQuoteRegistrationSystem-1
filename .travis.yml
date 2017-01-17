@@ -14,7 +14,7 @@ before_script:
   - docker ps -a
 
 install:
-  - cd src/ui && npm install
+  - cd src/ui && npm install && cd ../..
 
 script:
   - ./gradlew buildDist stageUI build
