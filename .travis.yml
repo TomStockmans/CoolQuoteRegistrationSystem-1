@@ -17,7 +17,7 @@ install:
   - cd src/ui && npm install && cd ../..
 
 script:
-  - ./gradlew buildDist stageUI build -DSPRING_DATA_MONGODB_HOST=127.0.0.1
+  - ./gradlew buildDist stageUI build -Dspring.profiles.active=travis
 
 # as stated in https://docs.travis-ci.com/user/languages/java/#Caching
 before_cache:
