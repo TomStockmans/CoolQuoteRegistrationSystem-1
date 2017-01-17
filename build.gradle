@@ -71,6 +71,10 @@ task stageUI(type: Copy) {
     into 'src/main/resources/static'
 }
 
+test {
+    systemProperty "spring.profiles.active", project.findProperty("springProfile")
+}
+
 // will be used by default by Heroku Gradle plugin
 //task stage(dependsOn: ['build', 'clean'])
 //build.mustRunAfter clean
