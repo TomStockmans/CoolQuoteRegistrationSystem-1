@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install:
-  - node_js install node
+  - nvm install node
 
 before_script:
 #  - cd src/ui && npm install
