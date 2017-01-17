@@ -10,7 +10,7 @@ before_install:
 
 before_script:
 #  - cd src/ui && npm install
-  - docker run -d -p 0.0.0.0:27017:27017 mongo
+  - docker run -d -p 127.0.0.1:27017:27017 mongo
   - docker ps -a
 
 install:
