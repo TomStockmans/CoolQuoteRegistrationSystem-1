@@ -17,7 +17,7 @@ install:
   - cd src/ui && npm install && cd ../..
 
 script:
-  - ./gradlew buildDist stageUI build -DspringProfile=travis
+  - ./gradlew buildDist stageUI build -PspringProfile=travis
 
 # as stated in https://docs.travis-ci.com/user/languages/java/#Caching
 before_cache:
