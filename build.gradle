@@ -46,6 +46,11 @@ dependencies {
     testCompile("org.glassfish.jersey.ext:jersey-proxy-client:2.23.2")
 }
 
+npmInstall {
+    workingDir = file('./src/ui')
+    outputs.upToDateWhen {false}
+}
+
 task setupAurelia(type: NpmTask) {
     workingDir = file('./src/ui')
     args = ['run', 'setup']
@@ -64,6 +69,10 @@ task stageUI(type: Copy) {
             'index.html',
             'favicon.ico'
     into 'src/main/resources/static'
+}
+
+test {
+    systemProperty "spring.profiles.active", project.findProperty("springProfile")
 }
 
 // will be used by default by Heroku Gradle plugin

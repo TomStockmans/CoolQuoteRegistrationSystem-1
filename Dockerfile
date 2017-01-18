@@ -1,14 +1,14 @@
 FROM frolvlad/alpine-oraclejdk8:slim
 # VOLUME /tmp
-ADD cool-quote-registration-system-1.0-SNAPSHOT.jar app.jar
+ADD build/libs/cool-quote-registration-system-1.0-SNAPSHOT.jar app.jar
 RUN sh -c 'touch /app.jar'
 ENV JAVA_OPTS=""
 ENV ENV_OPTS=""
-ENV PORT=8080
+ENV PORT=""
 ENV SPRING_PROFILES=""
-ENV MONGO_HOST=mongo
-ENV MONGO_PORT=27017
-ENV MONGO_DB=local
+ENV MONGO_HOST=""
+ENV MONGO_PORT=""
+ENV MONGO_DB=""
 ENV MONGO_USER=""
 ENV MONGO_PASSWORD=""
 
