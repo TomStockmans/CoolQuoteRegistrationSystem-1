@@ -1,1 +1,2 @@
-web java -Dspring.profiles.active=prod -DPORT=$PORT -DMONGO_HOST=$MONGO_HOST -DMONGO_PORT=$MONGO_PORT -DMONGO_DB=$MONGO_DB -DMONGO_USER=$MONGO_USER -DMONGO_PASSWORD=$MONGO_PASSWORD -jar build/libs/cool-quote-registration-system-1.0-SNAPSHOT.jar
+docker run -p 0.0.0.0:$PORT:$PORT -e SPRING_PROFILES=prod -e MONGO_HOST=MONGO_HOST -e MONGO_PASSWORD=MONGO_PASSWORD -e MONGO_PORT=MONGO_PORT -e MONGO_USER=MONGO_USER -e MONGO_DB=MONGO_DB cqrsventouris/cqrsapp web
+## web java -Dspring.profiles.active=prod -DPORT=$PORT -DMONGO_HOST=$MONGO_HOST -DMONGO_PORT=$MONGO_PORT -DMONGO_DB=$MONGO_DB -DMONGO_USER=$MONGO_USER -DMONGO_PASSWORD=$MONGO_PASSWORD -jar build/libs/cool-quote-registration-system-1.0-SNAPSHOT.jar
