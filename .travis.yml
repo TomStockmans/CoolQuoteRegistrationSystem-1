@@ -36,7 +36,7 @@ after_success:
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     docker build . -t swsb/cqrsapp;
     docker push swsb/cqrsapp;
-    docker login --email=$HEROKU_USERNAME --username=$HEROKU_USERNAME --password=$HEROKU_AUTH_TOKEN registry.heroku.com;
-    docker tag swsb/cqrsapp registry.heroku.com/cool-quote-registration-system/web;
-    docker push registry.heroku.com/cool-quote-registration-system/web;
+#    docker login --email=$HEROKU_USERNAME --username=$HEROKU_USERNAME --password=$HEROKU_AUTH_TOKEN registry.heroku.com;
+#    docker tag swsb/cqrsapp registry.heroku.com/cool-quote-registration-system/web;
+#    docker push registry.heroku.com/cool-quote-registration-system/web;
     fi
