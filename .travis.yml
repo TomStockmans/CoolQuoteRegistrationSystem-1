@@ -32,7 +32,6 @@ after_script:
   - docker rm -f mongotest
 
 after_success:
-  - echo "$SNARF"
   - if [ "$TRAVIS_BRANCH" == "prod" ]; then
     docker build . -t cqrsventouris/cqrsapp;
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
