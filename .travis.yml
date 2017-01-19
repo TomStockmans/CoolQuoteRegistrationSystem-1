@@ -33,7 +33,7 @@ after_script:
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "prod" ]; then
-    docker build . -t cqrsventouris/cqrsapp;
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker push cqrsventouris/cqrsapp;
+    docker build . -t swsb/cqrsapp;
+    docker push swsb/cqrsapp;
     fi
