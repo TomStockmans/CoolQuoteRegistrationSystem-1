@@ -1,5 +1,7 @@
 # Cool Quote Registration System
 
+[![Build Status](https://travis-ci.org/SoftwareSandbox/CoolQuoteRegistrationSystem.svg?branch=prod)](https://travis-ci.org/SoftwareSandbox/CoolQuoteRegistrationSystem)
+
 ## Stack
 Frontend: [Aurelia](http://aurelia.io/)
 
@@ -130,16 +132,55 @@ We're calling our _Resource_ with the `jersey-proxy-client` framework.
 
 This is why we're not `@Autowiring` our own _Resource_, but instead using a `WebResourceFactory` to proxy our _Resource_, and do all the actual http calls, marshalling and error handling via `jersey-client`.
 
+## How the dev-deploy cycle works now
+Note: We don't have automatic branch promotion so we have to do this manually.
+1. Make your changes.
+2. Build locally with `./gradlew buildDist stageUI build`
+3. Build a docker image with `docker build . -t swsb/cqrsapp:1.0-SNAPSHOT`
+4. Manually test your changes with `docker-compose up`
+5. Merge your branch with prod with `git merge origin/prod`
+6. If you had any conflicts, merge them and go back to step 2.
+7. Push your branch to github
+8. Wait for a successful Travis build of your branch
+9. Merge your branch on to prod with `git checkout prod && git merge <yourbranch>`
+10. Push prod to github
+11. Travis will pick up the prod branch, and on a successful gradle build, Travis will build a docker image from your successfully built .ear file and push it to both [DockerHub](https://hub.docker.com/r/swsb/cqrsapp/)'s and [Heroku](https://dashboard.heroku.com/apps/cool-quote-registration-system)'s registries.
+12. Heroku will pick up the newly pushed docker image and will restart the container with the new docker image.
+
+### Travis
+Check out Travis' excellent [documentation](https://docs.travis-ci.com/) and our [.travis.yml](.travis.yml) file.
+
+## No Procfile necessary for Heroku
+Because we're actually deploying with Travis by pushing to the Heroku registry.
+
+## Deploy manually
+Preferably **don't** deploy manually, because there aren't necessarily any code changes pushed to our code repository.
+
+First log in to the heroku registry with `docker login -u=herokuuser -p=herokuauthtoken registry.heroku.com`, or with the CLI `heroku container:login`.
+
+Then make sure you create a tag based off your earlier built docker image (see above) with `docker tag swsb/cqrsapp:1.0-SNAPSHOT registry.heroku.com/cool-quote-registration-system/web`.
+
+And push that tag with `docker push registry.heroku.com/cool-quote-registration-system/web`.
+
+## Troubleshooting production
+### Heroku Config vars for every Docker ENV var
+It's really important that there are Heroku config variables for every environment variable our docker container needs.
+
+These are entered in [heroku's settings tab](https://dashboard.heroku.com/apps/cool-quote-registration-system/settings).
+
+Miss one, either by not listing a new one, or having a typo in one of them, and the app won't work anymore.
+
+### Consulting Heroku logs
+Either install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) and type `heroku logs -a cool-quote-registration-system`, or log in to the Heroku dashboard and click on [_More > Logs_]([here](https://dashboard.heroku.com/apps/cool-quote-registration-system/logs)).
+
+### Deploying the latest production build locally
+First pull the latest successfully deployed docker image with `docker pull swsb/cqrsapp`.
+
+Then change [docker-compose.yml](docker-compose.yml) to use the `swsb/cqrsapp` image instead of the locally built `:1.0-SNAPSHOT` tag.
+
+And run `docker-compose up`.
 
 ## Deploying to Heroku
 [Deploying using Gradle](https://devcenter.heroku.com/articles/deploying-gradle-apps-on-heroku)
 
 [Deploying using a Docker Container](https://devcenter.heroku.com/articles/container-registry-and-runtime)
-
-### Stuff to do to be able to deploy our app as a docker container on Heroku
-
-* create a dockerhub registry
-* have travis build and push an image to the registry
-* configure heroku with the `latest` tag of the dockerhub image
-* configure heroku to _deploy after successful travis build_
-* and I guess also fix our Aurelia app to use a proper _baseUrl_ or something :smile:

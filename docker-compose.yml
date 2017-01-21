@@ -4,7 +4,7 @@ mongo:
     - "0.0.0.0:27017:27017"
 
 hoer:
-  image: swsb/coolquoteregistrationsystem:1.0-SNAPSHOT
+  image: swsb/cqrsapp:1.0-SNAPSHOT
   links:
     - mongo
   ports:
