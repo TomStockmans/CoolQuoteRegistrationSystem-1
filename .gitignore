@@ -59,6 +59,9 @@ fabric.properties
 
 
 ### Node ###
+# TypeScript
+dist/
+
 # Logs
 logs
 *.log
