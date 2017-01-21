@@ -134,6 +134,7 @@ This is why we're not `@Autowiring` our own _Resource_, but instead using a `Web
 
 ## How the dev-deploy cycle works now
 Note: We don't have automatic branch promotion so we have to do this manually.
+
 1. Make your changes.
 2. Build locally with `./gradlew buildDist stageUI build`
 3. Build a docker image with `docker build . -t swsb/cqrsapp:1.0-SNAPSHOT`
