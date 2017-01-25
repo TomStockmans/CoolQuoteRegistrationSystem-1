@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as process from 'process';
 import * as readline from 'readline';
+import * as EJSON from 'mongodb-extended-json';
 
 class QuoteBuilder {
     private quote: Quote = null;
@@ -21,8 +22,8 @@ class QuoteBuilder {
     //TODO use BSON.stringify instead if that shit exists
     private prependQuoteIfAtLeastOneQuoteWasWritten() {
         return this.hasAtLeastOneQuote
-            ? ',' + JSON.stringify(this.quote, null, 3)
-            : JSON.stringify(this.quote, null, 3);
+            ? ',' + EJSON.stringify(this.quote, null, 3)
+            : EJSON.stringify(this.quote, null, 3);
     }
 }
 
