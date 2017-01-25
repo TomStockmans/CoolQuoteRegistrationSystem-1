@@ -19,16 +19,16 @@ class QuoteBuilder {
         this.quote = null;
     }
 
-    //TODO use BSON.stringify instead if that shit exists
     private prependQuoteIfAtLeastOneQuoteWasWritten() {
         return this.hasAtLeastOneQuote
-            ? ',' + EJSON.stringify(this.quote, null, 3)
-            : EJSON.stringify(this.quote, null, 3);
+            ? ',' + JSON.stringify(this.quote)
+            : JSON.stringify(this.quote);
     }
 }
 
 class Quote {
     private lines: Array<Line> = [];
+    // private $currentDate = {"creationDate" : {$type:"timestamp"}};
     private createdOn:Date;
     private _class = "be.swsb.cqrs.conversation.Conversation";
 
@@ -95,8 +95,19 @@ export function convert(sourceFile: string, targetFile: string) {
     let startMigrate = function () {
         target.write('db.conversation.insert([\n');
     };
+
+    function updateTimestamps() {
+        target.write(`
+        db.conversation.updateMany(
+            {},
+            { $set: {"createdOn": new Date()} }
+        );
+        `);
+    }
+
     let endMigrate = function () {
         target.write('\n]);');
+        updateTimestamps();
     };
 
     startMigrate();
