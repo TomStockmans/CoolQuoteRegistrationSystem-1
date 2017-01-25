@@ -18,6 +18,7 @@ class QuoteBuilder {
         this.quote = null;
     }
 
+    //TODO use BSON.stringify instead if that shit exists
     private prependQuoteIfAtLeastOneQuoteWasWritten() {
         return this.hasAtLeastOneQuote
             ? ',' + JSON.stringify(this.quote, null, 3)
