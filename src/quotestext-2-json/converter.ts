@@ -20,17 +20,19 @@ class QuoteBuilder {
 
     private prependQuoteIfAtLeastOneQuoteWasWritten() {
         return this.hasAtLeastOneQuote
-            ? ',' + JSON.stringify(this.quote)
-            : JSON.stringify(this.quote);
+            ? ',' + JSON.stringify(this.quote, null, 3)
+            : JSON.stringify(this.quote, null, 3);
     }
 }
 
 class Quote {
     private lines: Array<Line> = [];
-    private createdOn: Date;
+    private createdOn:Date;
+    private _class = "be.swsb.cqrs.conversation.Conversation";
 
     constructor(line: Line) {
         this.addLine(line);
+        this.createdOn = new Date();
     }
 
     addLine(line: Line): void {
@@ -79,7 +81,7 @@ class Participant {
 export function convert(sourceFile: string, targetFile: string) {
     if (!targetFile) {
         console.log(`No targetFile was given, using default`);
-        targetFile = 'output.json';
+        targetFile = 'migrate.js';
     }
     console.log(`Converting [${sourceFile}] to [${targetFile}]`);
     let target = fs.createWriteStream(targetFile);
@@ -87,7 +89,15 @@ export function convert(sourceFile: string, targetFile: string) {
     let quoteBuilder = new QuoteBuilder();
 
     const rl = readline.createInterface({input: fs.createReadStream(sourceFile)});
-    target.write('[');
+
+    let startMigrate = function () {
+        target.write('db.conversation.insert([\n');
+    };
+    let endMigrate = function () {
+        target.write('\n]);');
+    };
+
+    startMigrate();
     rl.on('line', (line) => {
         !line
             ? quoteBuilder.writeQuote(target)
@@ -95,6 +105,6 @@ export function convert(sourceFile: string, targetFile: string) {
     });
     rl.on('close', () => {
         quoteBuilder.writeQuote(target);
-        target.write(']');
+        endMigrate();
     });
 }
