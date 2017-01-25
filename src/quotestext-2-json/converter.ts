@@ -3,11 +3,8 @@ import * as process from 'process';
 import * as readline from 'readline';
 
 class QuoteBuilder {
-    private quote: Quote;
-
-    constructor() {
-        this.quote = null;
-    }
+    private quote: Quote = null;
+    private hasAtLeastOneQuote: boolean = false;
 
     parseLine(line: string) {
         this.quote
@@ -16,8 +13,15 @@ class QuoteBuilder {
     }
 
     writeQuote(target) {
-        target.write(JSON.stringify(this.quote));
+        if (this.quote != null) target.write(this.prependQuoteIfAtLeastOneQuoteWasWritten());
+        this.hasAtLeastOneQuote = true;
         this.quote = null;
+    }
+
+    private prependQuoteIfAtLeastOneQuoteWasWritten() {
+        return this.hasAtLeastOneQuote
+            ? ',' + JSON.stringify(this.quote)
+            : JSON.stringify(this.quote);
     }
 }
 
@@ -58,7 +62,7 @@ class Line {
 }
 
 class Participant {
-    private name: string
+    private name: string;
     private victim: boolean = false;
 
     constructor(name: string) {
@@ -68,7 +72,8 @@ class Participant {
 
 
 !process.argv[2] && !process.argv[3]
-    ? console.log(`You'll have to supply a filename as a second argument. e.g.:\nnode converter examplequotes.txt`)
+    ? console.log(`You'll have to supply a filename as a second argument. e.g.:\n
+                   node converter examplequotes.txt`)
     : convert(process.argv[2], process.argv[3]);
 
 export function convert(sourceFile: string, targetFile: string) {
@@ -82,13 +87,14 @@ export function convert(sourceFile: string, targetFile: string) {
     let quoteBuilder = new QuoteBuilder();
 
     const rl = readline.createInterface({input: fs.createReadStream(sourceFile)});
+    target.write('[');
     rl.on('line', (line) => {
-        if (!line) {
-            rl.emit('newline');
-        }
-        quoteBuilder.parseLine(line);
+        !line
+            ? quoteBuilder.writeQuote(target)
+            : quoteBuilder.parseLine(line);
     });
-    rl.on('newline', () => {
+    rl.on('close', () => {
         quoteBuilder.writeQuote(target);
+        target.write(']');
     });
 }
