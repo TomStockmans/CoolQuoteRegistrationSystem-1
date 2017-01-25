@@ -2,9 +2,6 @@ import * as fs from 'fs';
 import * as process from 'process';
 import * as readline from 'readline';
 
-
-
-
 class QuoteBuilder {
     private quote: Quote;
 
@@ -24,33 +21,9 @@ class QuoteBuilder {
     }
 }
 
-
-
-
-class Line {
-    private text: string;
-    private author: string;
-
-    constructor(line: string) {
-        this.parse(line);
-    }
-
-    parse(line: string) {
-        let split = line.split(':');
-        if (split.length > 1) {
-            this.author = split[0];
-            this.text = split[1];
-        } else {
-            this.text = line;
-        }
-    }
-}
-
-
-
-
 class Quote {
     private lines: Array<Line> = [];
+    private createdOn: Date;
 
     constructor(line: Line) {
         this.addLine(line);
@@ -60,6 +33,39 @@ class Quote {
         this.lines.push(line);
     }
 }
+
+class Line {
+    private text: string;
+    private participants: Participant[];
+    private lineType:string; // 'CONTEXT' | 'SPEECH'
+    private punchLine: boolean = false;
+
+    constructor(line: string) {
+        this.parse(line);
+    }
+
+    parse(line: string) {
+        let split = line.split(':');
+        if (split.length > 1) {
+            this.participants = [new Participant(split[0])];
+            this.text = split[1];
+            this.lineType = 'SPEECH';
+        } else {
+            this.text = line;
+            this.lineType = 'CONTEXT';
+        }
+    }
+}
+
+class Participant {
+    private name: string
+    private victim: boolean = false;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
 
 !process.argv[2] && !process.argv[3]
     ? console.log(`You'll have to supply a filename as a second argument. e.g.:\nnode converter examplequotes.txt`)
