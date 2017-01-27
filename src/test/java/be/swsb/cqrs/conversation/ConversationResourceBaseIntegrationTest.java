@@ -93,7 +93,7 @@ public class ConversationResourceBaseIntegrationTest {
     }
 
     @Test
-    public void all_ReturnsAllConversationsOrderedByCreatedOn() throws Exception {
+    public void all_ReturnsAllConversations_OldestLastByCreatedOn() throws Exception {
         Conversation snarf2 = aDefaultConversation().withPunchLine("snarf yo").withCreatedOn(LocalDateTime.of(2016, Month.JUNE, 18, 9, 30, 01)).build();
         Conversation snarf1 = aDefaultConversation().withPunchLine("Snarf snarf").withCreatedOn(LocalDateTime.of(2016, Month.JUNE, 18, 9, 30, 02)).build();
         Conversation snarf3 = aDefaultConversation().withPunchLine("Snarf the turd").withCreatedOn(LocalDateTime.of(2016, Month.JUNE, 18, 9, 30, 03)).build();
@@ -101,7 +101,7 @@ public class ConversationResourceBaseIntegrationTest {
 
         List<Conversation> conversations = Stream.of(conversationResource.all().readEntity(Conversation[].class)).collect(Collectors.toList());
 
-        assertThat(conversations).containsExactly(snarf2, snarf1, snarf3);
+        assertThat(conversations).containsExactly(snarf3, snarf1, snarf2);
     }
 
     @Test

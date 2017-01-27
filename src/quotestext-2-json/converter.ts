@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as process from 'process';
 import * as readline from 'readline';
-import * as EJSON from 'mongodb-extended-json';
 
 class QuoteBuilder {
     private quote: Quote = null;
@@ -28,7 +27,6 @@ class QuoteBuilder {
 
 class Quote {
     private lines: Array<Line> = [];
-    // private $currentDate = {"creationDate" : {$type:"timestamp"}};
     private createdOn:Date;
     private _class = "be.swsb.cqrs.conversation.Conversation";
 
@@ -100,14 +98,21 @@ export function convert(sourceFile: string, targetFile: string) {
         target.write(`
         db.conversation.updateMany(
             {},
-            { $set: {"createdOn": new Date()} }
+            { $currentDate: { createdOn: true } }
         );
+        `);
+        //actually replace after all scripts are done with:
+        target.write(`
+        db.conversation.find().forEach(function(c) {
+            c.createdOn = new Date();
+            db.conversation.save(c);
+        });
         `);
     }
 
     let endMigrate = function () {
         target.write('\n]);');
-        updateTimestamps();
+        // updateTimestamps();
     };
 
     startMigrate();

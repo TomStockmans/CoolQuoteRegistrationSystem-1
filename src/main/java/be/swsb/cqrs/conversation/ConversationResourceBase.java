@@ -25,7 +25,7 @@ public class ConversationResourceBase implements ConversationResource {
     @Override
     @GET
     public Response all() {
-        return Response.ok(repo.findAll(new Sort(Sort.Direction.ASC, "createdOn"))).build();
+        return Response.ok(repo.findAll(new Sort(Sort.Direction.DESC, "createdOn"))).build();
     }
 
     @POST
