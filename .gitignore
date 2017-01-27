@@ -144,3 +144,5 @@ gradle-app.setting
 src/ui/scripts/app-bundle.js
 src/ui/scripts/app-bundle.js.map
 src/ui/scripts/vendor-bundle.js
+
+src/quotestext-2-json/converter.js
