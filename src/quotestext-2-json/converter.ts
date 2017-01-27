@@ -59,6 +59,7 @@ class Line {
         } else {
             this.text = line;
             this.lineType = 'CONTEXT';
+            this.participants = [new Participant('Context')];
         }
     }
 }
