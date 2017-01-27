@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -88,6 +90,18 @@ public class ConversationResourceBaseIntegrationTest {
         List<Conversation> conversations = Stream.of(conversationResource.all().readEntity(Conversation[].class)).collect(Collectors.toList());
 
         assertThat(conversations).containsOnly(snarf, liono);
+    }
+
+    @Test
+    public void all_ReturnsAllConversationsOrderedByCreatedOn() throws Exception {
+        Conversation snarf2 = aDefaultConversation().withPunchLine("snarf yo").withCreatedOn(LocalDateTime.of(2016, Month.JUNE, 18, 9, 30, 01)).build();
+        Conversation snarf1 = aDefaultConversation().withPunchLine("Snarf snarf").withCreatedOn(LocalDateTime.of(2016, Month.JUNE, 18, 9, 30, 02)).build();
+        Conversation snarf3 = aDefaultConversation().withPunchLine("Snarf the turd").withCreatedOn(LocalDateTime.of(2016, Month.JUNE, 18, 9, 30, 03)).build();
+        repo.save(Arrays.asList(snarf1, snarf2, snarf3));
+
+        List<Conversation> conversations = Stream.of(conversationResource.all().readEntity(Conversation[].class)).collect(Collectors.toList());
+
+        assertThat(conversations).containsExactly(snarf2, snarf1, snarf3);
     }
 
     @Test
