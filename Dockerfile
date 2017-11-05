@@ -1,6 +1,6 @@
 FROM frolvlad/alpine-oraclejdk8:slim
 # VOLUME /tmp
-ADD build/libs/cool-quote-registration-system-1.0-SNAPSHOT.jar app.jar
+ADD ./build/libs/cool-quote-registration-system-1.0-SNAPSHOT.jar app.jar
 RUN sh -c 'touch /app.jar'
 ENV JAVA_OPTS=""
 ENV ENV_OPTS=""
