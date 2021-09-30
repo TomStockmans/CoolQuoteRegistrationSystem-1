@@ -85,6 +85,7 @@ public class Conversation {
                 ", createdOn=" + createdOn +
                 ", conversationDate=" + conversationDate +
                 ", lines=" + lines +
+                "test" +
                 '}';
     }
 }
