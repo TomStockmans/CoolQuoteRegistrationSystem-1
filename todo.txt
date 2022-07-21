@@ -1,0 +1,4 @@
+1. nieuwe git repo aanmaken
+2. db omzetten naar sqlite
+3. frontend omzetten naar angular
+4. deployen op heroku
