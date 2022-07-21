@@ -32,9 +32,12 @@ repositories {
 
 dependencies {
     def springBootVersion = "1.4.1.RELEASE"
+    compile( 'org.springframework.boot:spring-boot-starter-data-jpa')
+    compile( 'org.xerial:sqlite-jdbc')
+    compile( group: 'com.zsoltfabok', name: 'sqlite-dialect', version: '1.0')
+
     compile("org.springframework.boot:spring-boot-starter-jersey:$springBootVersion") //jax-rs instead of spring-mvc
     compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion") //so we can serve static content from src/main/resources/static/
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion")
 
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.3") //to be able to deserialize LocalDateTimes etc.
 
@@ -44,6 +47,7 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testCompile("org.glassfish.jersey.core:jersey-client:2.23.2")
     testCompile("org.glassfish.jersey.ext:jersey-proxy-client:2.23.2")
+
 }
 
 npmInstall {
