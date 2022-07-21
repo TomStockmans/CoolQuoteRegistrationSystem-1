@@ -36,7 +36,7 @@ public class ConversationResourceBase implements ConversationResource {
             return Response.status(Response.Status.BAD_REQUEST).header("Application-Error", "The conversation you tried to create is invalid").build();
         }
         Conversation conv = repo.save(newConversation);
-        URI uri = UriBuilder.fromResource(ConversationResourceBase.class).path(conv.getId()).build();
+        URI uri = UriBuilder.fromResource(ConversationResourceBase.class).path(String.valueOf(conv.getId())).build();
         return Response.created(uri).entity(conv).build();
     }
 
@@ -44,7 +44,7 @@ public class ConversationResourceBase implements ConversationResource {
     @Path("{id}")
     @Override
     public Response get(@PathParam("id") String id) {
-        Conversation conversation = repo.findOne(id);
+        Conversation conversation = repo.findOne(Long.getLong(id));
         if (conversation == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -55,10 +55,10 @@ public class ConversationResourceBase implements ConversationResource {
     @Path("{id}")
     @Override
     public Response delete(@PathParam("id") String id) {
-        if (repo.findOne(id) == null) {
+        if (repo.findOne(Long.getLong(id)) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        repo.delete(id);
+        repo.delete(Long.getLong(id));
         return Response.ok().build();
     }
 
@@ -67,7 +67,7 @@ public class ConversationResourceBase implements ConversationResource {
     @Path("{id}")
     @Override
     public Response update(@PathParam("id") String id, Conversation updatedConversation) {
-        if (repo.findOne(id) == null) {
+        if (repo.findOne(Long.getLong(id)) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 

@@ -3,16 +3,31 @@ package be.swsb.cqrs.conversation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import static javax.persistence.GenerationType.AUTO;
+
+@Entity
 public class Line {
+
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
     private String text;
     private boolean punchLine;
     private LineType lineType;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "FK_PARTICIPANT_ID", referencedColumnName = "ID")
     private List<Participant> participants;
+
+    //hibernate
+    public Line() {
+    }
 
     public String getText() {
         return text;
@@ -49,6 +64,14 @@ public class Line {
 
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

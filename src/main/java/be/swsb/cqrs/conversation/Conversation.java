@@ -1,7 +1,6 @@
 package be.swsb.cqrs.conversation;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -9,19 +8,21 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static javax.persistence.GenerationType.AUTO;
 
+@Entity
 public class Conversation {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -31,23 +32,23 @@ public class Conversation {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate conversationDate;
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @JoinColumn(name = "FK_CONVERSATION_ID", referencedColumnName = "ID")
     private List<Line> lines;
 
     @JsonCreator
-    public Conversation(@JsonProperty("id") String id,
-                        @JsonProperty("lines") List<Line> lines,
+    public Conversation(@JsonProperty("lines") List<Line> lines,
                         @JsonProperty("createdOn") LocalDateTime createdOn,
                         @JsonProperty("conversationDate") LocalDate conversationDate
                         ) {
-        this.id = id;
         this.createdOn = createdOn == null ? LocalDateTime.now() : createdOn;
         this.conversationDate = conversationDate;
         this.lines = lines;
     }
 
-    public String getId() {
-        return id;
-    }
+    //hibernate
+    protected Conversation() {}
+
 
     public LocalDateTime getCreatedOn() {
         return createdOn;
@@ -59,6 +60,10 @@ public class Conversation {
 
     public List<Line> getLines() {
         return lines;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override

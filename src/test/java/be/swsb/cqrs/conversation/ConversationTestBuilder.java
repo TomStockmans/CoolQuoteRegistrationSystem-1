@@ -15,7 +15,7 @@ public class ConversationTestBuilder {
     public static final LocalDateTime CREATED_ON = LocalDateTime.of(2016, 10, 12, 13, 32, 3);
     public static final LocalDate CONVERSATION_DATE = LocalDate.of(2016, 10, 12);
 
-    private String id;
+    private Long id;
     private List<Line> lines = new ArrayList<>();
     private Line punchLine;
     private LocalDateTime createdOn;
@@ -32,7 +32,7 @@ public class ConversationTestBuilder {
         Line context = aContextLine().withText("context").build();
         Line punchLine = aSpeechLine().asPunchLine().withText("punch").withParticipants(new Participant("Gianni",false)).build();
         return aConversation()
-                .withId(UUID.randomUUID().toString())
+                .withId(1L)
                 .withCreatedOn(CREATED_ON)
                 .withConversationDate(CONVERSATION_DATE)
                 .withLines(context)
@@ -43,10 +43,10 @@ public class ConversationTestBuilder {
         List<Line> allLines = new ArrayList<>();
         allLines.addAll(lines);
         allLines.add(punchLine);
-        return new Conversation(id, allLines, createdOn, conversationDate);
+        return new Conversation(allLines, createdOn, conversationDate);
     }
 
-    public ConversationTestBuilder withId(String id) {
+    public ConversationTestBuilder withId(Long id) {
         this.id = id;
         return this;
     }

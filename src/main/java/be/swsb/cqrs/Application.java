@@ -25,7 +25,7 @@ public class Application
 
     @Override
     public void run(String... args) throws Exception {
-//        initDummyStuff();
+        initDummyStuff();
     }
 
     private void initDummyStuff() {
@@ -52,7 +52,7 @@ public class Application
 
         LocalDateTime createdOn = LocalDateTime.now();
         LocalDate conversationDate = LocalDate.now();
-        Conversation conv = new Conversation(UUID.randomUUID().toString(), Arrays.asList(line1, line2, punchLine), createdOn, conversationDate);
+        Conversation conv = new Conversation(Arrays.asList(line1, line2, punchLine), createdOn, conversationDate);
         Conversation savedConvo = repo.save(conv);
         System.out.println("Persisted convo with id: "+savedConvo.getId());
     }
